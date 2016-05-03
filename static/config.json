@@ -1,0 +1,17 @@
+{
+    "Loginurl": "user/login",
+    "Logouturl": "user/logout",
+    "DistrictList": "domain/list",
+    "schoolList":"domain/list/school",
+    "Domainlist":"domain/list/state",
+    "New_District_Popup_Provider":"domain/list/providers",
+    "courseList":"course/list",
+    "welcomeLetter":"welcome/letter",
+    "schoolWelcomeLetter":"welcome/letter/school",
+    "createDomain":"domain/create/district",
+    "editDomain":"domain/edit/district",
+    "getDomainData":"domain",
+    "createSchool":"domain/create/school",
+    "eidtSchool":"domain/edit/school",
+    "pilot_report":"reports/pilotreport"
+}

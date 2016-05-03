@@ -1,0 +1,899 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Improvement Network</title>
+	<link rel="shortcut icon" type="image/png" href="images/logo.png"/>
+	<link rel="shortcut icon" type="image/png" href="images/logo.png"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" /><link rel="stylesheet" href="css/dev.css" type="text/css" media="screen" />
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>	
+    <script src="js/libs/jquery2.1.4.js"></script>
+	<script type="text/javascript">		
+		var datefield=document.createElement("input")
+		datefield.setAttribute("type", "text")
+		if (datefield.type!="text"){ //if browser doesn't support input type="date", load files for jQuery UI Date Picker
+			document.write('<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />\n')
+			document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"><\/script>\n')
+			document.write('<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"><\/script>\n') 
+		}
+	</script>
+	 
+	<script>
+		if (datefield.type!="text"){ //if browser doesn't support input type="date", initialize date picker widget:
+			jQuery(function($){ //on document.ready
+				//$('#birthday').datepicker();
+				$('.popupInputDate').datepicker();
+				$('.fa-calendar').datepicker();
+			})
+		}
+	</script>
+  </head>
+  <body>
+    <div id="snwgrayBg" class="grayBg"></div>
+
+
+    <div id="snwminContainer" class="minContainer">	
+
+      <div style="display:none;" id="snwaddNew" class="addNew">
+        <hgroup><h1 id="snwfloatLeft" class="floatLeft">add new</h1><p id="snwcloseAN" class="closeAN"><img src="images/revoke.png"></p></hgroup>
+        <ul id="snwaddNewList" class="addNewList">
+          <li><a id="snwUser" href="#">User</a></li>
+          <li><a id="snwDomain" href="#">Domain</a></li>
+          <li><a id="snwCourse" href="#">Course</a></li>
+          <li><a id="snwSubscription" href="#">Subscription</a></li>
+        </ul>
+      </div>
+
+      <header id="snwgreenHead" class="greenHead">
+        <div id="snwadminLogo" class="adminLogo"><figure><img src="images/adminLogo.png"></br><label id="snwlogoText2" class="logoText2">PROVISIONING TOOL  </label></figure></div>
+        <!--		<p class="circlePlus"><img src="images/plusCircle.png"/></p>-->
+        <nav id="adminNav">
+          <ul id="snwadminNav" class="adminNav">
+            <li><a id="snwDistrict" href="#">District</a></li><li><a id="snwSchool" href="#">School</a></li><li ><a id="snwReports" href="#">Reports<span id="snwarrowDn3" class="arrowDn"></span></a></li>
+          </ul>
+          <div id="snwadminNavList" class="adminNavList">
+            <ul id="snwhomeList" class="homeList">
+<!--              <li><a id="snwfirstAdddomain" href="#">Add&nbsp;Domain</a></li>
+              <li><a id="snwfirstEditdomain" href="#">Edit&nbsp;Domain</a></li>-->
+
+            </ul>
+            <ul id="snwadministrationList" class="administrationList">
+<!--              <li><a id="snwadminAddDomain" href="#">Add&nbsp;Domain</a></li>
+              <li><a id="snwadminEditDomain" href="#">Edit&nbsp;Domain</a></li>-->
+            </ul>       
+            <ul id="snwreportsList" class="reportsList">
+              <li><a id="snwreportsLience" href="#">License&nbsp;Usage&nbsp;Report</a></li>
+              <li><a id="snwreportspilot" href="#">Pilot&nbsp;Domain&nbsp;Report</a></li>
+            </ul>
+
+          </div>
+        </nav>
+        <div id="snwloginPerson" class="loginPerson"><span id="snwloggerName" class="loggerName">Elizabeth Doe</span><span id="snwarrowDn" class="arrowDn lgPpr"></span>
+          <div id="snwLPMenu" class="LPMenu">
+            <span id="snwmenuArrow" class="menuArrow"></span>
+            <ul id="snwLPMenuLists" class="LPMenuList">
+              <!--					<li><i class="fa fa-user fa-lg"></i><a href="#">Personal Information</a></li>
+                        <li><i class="fa fa-gear fa-lg"></i><a href="#">Transcript</a></li>
+                        <li><i class="fa fa-server fa-lg"></i><a href="#">Proxy</a></li>-->
+              <li><i id="snwLogOuticon" class="fa fa-sign-in fa-lg LogOuticon"></i><a href="#">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </header>
+      <header id="snwadminSearch" class="adminSearch">
+        <hgroup><h1>License Usage Report</h1></hgroup>
+		<!--<p class="search"><input type="text" placeholder="search"/><span class="SearchClick"></span></p>-->
+      </header>
+      <div id="adminContainer">
+	  
+	  
+		<section class="selectDistrictBox">
+			<div class="selectDistrictBoxHead">
+						<form>
+			<div>
+				<table class="formTable">				  
+				  <tr>
+					<td style="width:20%;" >State:</td>
+					<td style="width:80%;" class="demo">	
+						<select class="balck">
+							<option>CSS</option>
+							<option>HTML </option>
+							<option>HTML 5</option>
+						</select>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:20%;" >Domains:</td>
+					<td style="width:80%;" class="demo">							
+						<select class="balck">
+							<option>CSS</option>
+							<option>HTML </option>
+							<option>HTML 5</option>
+						</select>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:10%;" class="subDateAlign"> Date:</td>
+					<td style="width:80%;">	
+						<ul class="subDate">
+							<li>
+								<i class="fa fa-calendar fa-lg calender"></i>
+								<input type="text" class="popupInputDate" placeholder="MM/DD/YYYY" data-date-inline-picker="true">
+							</li>
+							<li>To</li>
+							<li>
+								<i class="fa fa-calendar fa-lg calender1"></i>
+								<input type="text" class="popupInputDate" placeholder="MM/DD/YYYY" data-date-inline-picker="true">
+							</li>
+						</ul>
+					</td>				
+				  </tr>				  
+				  <tr>
+					<td>Group Results by:</td>
+					<td><input type="radio" name="Add Subdomain" value="Add Subdomain" checked>District
+					<input type="radio" name="Add Subdomain" value="Add Subdomain" checked>Course</td>	
+				  </tr>	
+				  <tr>
+					<td style="width:20%;" ></td>
+					<td style="width:80%;"><button type="button" class="grayBttn bttnSpace submitdistrict">Submit</button></td>				
+				  	</tr>				 
+				</table>
+			</div>	
+		</form>
+			</div>
+		</section>
+	
+<!--	--><section class="districtTabBox">
+		
+			<div class="districtTabBoxHead">
+				<hgroup><h1 class="floatLeft">License Usage Report By Domain</h1></hgroup>				
+			</div>			
+			<!-- License Usage Report Page screen 25 & 26 start -->
+			
+				<div class="LPSDTopTableBox">
+					<table class="LPSDTopTable">				  
+					  <tbody><tr>
+						<td style="width:10%;">District: </td>
+						<td style="width:30%;">Scottsdale Unified School District</td>
+						<td style="width:13%;">District Id: </td>
+						<td style="width:30%;">1485215</td>						
+					  </tr>
+					  <tr>
+						<td>License Type: </td>
+						<td>Per Seat</td>
+						<td>Number of License:</td>
+						<td>100</td>
+					  </tr>					  
+					</tbody></table>
+				</div>
+				
+				<div class="LPSDAvlList">
+					<div class="SAList">
+						<table class="SAListTable">				  
+						  <tr>
+							<th>School Name</th>
+							<th>Student</th>
+							<th>Student ID</th>
+							<th>First Activity Date</th>
+							<th>Last Activity Date</th>
+						  </tr>
+						  <tr>
+							<td >Desert Canyon Elementry School</td>
+							<td >Young</td>
+							<td >1541619</td>
+							<td >8/20/2014</td>
+							<td >8/20/2014</td>
+						  </tr>
+						  <tr>
+							<td >Desert Canyon Elementry School</td>
+							<td >Lopez</td>
+							<td >1541619</td>
+							<td >8/20/2014</td>
+							<td >8/20/2014</td>
+						  </tr>
+						  <tr>
+							<td >Desert Canyon Elementry School</td>
+							<td >Mikelson</td>
+							<td >1541619</td>
+							<td >8/20/2014</td>
+							<td >8/20/2014</td>
+						  </tr>
+						</table>
+					</div>
+					<div class="FootPagination">
+						<div class="floatLeft LURTotal">
+							Total Student 8 | District Summary
+						</div>
+						<div class="floatRight">
+							<button type="button" class="grayBttn bttnSpace submitdistrict floatRight">Download XLS</button><button type="button" class="greenBttn cancelistrict floatRight">Download PDF</button>
+						</div>
+					</div>
+				</div>
+				
+				
+			
+			<!-- License Usage Report Page screen 25 & 26 end -->
+	</section>
+	  
+		
+		
+		
+		
+		
+		
+		
+		
+		<!-- form start -->
+		<!-- Create a New District Domain form start -->
+		<div class="popupBox">
+		<header><hgroup><h1 class="floatLeft">Create a New District Domain</h1><p class="closeAN"><img src="images/revoke.png"></p></hgroup></header>
+		<form>
+			<div>
+				<table class="formTable">				  
+				  <tr>
+					<td style="width:30%;" ><span>*</span>State:</td>
+					<td style="width:70%;" class="demo">	
+						<select class="balck">
+							<option>CSS</option>
+							<option>HTML </option>
+							<option>HTML 5</option>
+						</select>
+					</td>				
+				  </tr>
+				  <tr>
+					<td><span>*</span>Domain Name:</td>
+					<td><input type="text" class="popupInput" /></td>	
+				  </tr>
+				  <tr>
+					<td><span>*</span>Login Prefix:</td>
+					<td><input type="text" class="popupInput" /></td>	
+				  </tr>
+				  <tr>
+					<td><span>*</span>External ID:</td>
+					<td><input type="text" class="popupInput" /></td>	
+				  </tr>
+				  <tr>
+					<td><span>*</span>Subscription Type:</td>
+					<td><input type="radio" name="Add Subdomain" value="Add Subdomain" checked>Entire Catalog
+					<input type="radio" name="Add Subdomain" value="Add Subdomain" checked>Selective Courses</td>	
+				  </tr>
+				  <tr>
+					<td style="width:30%;" ><span>*</span>Course Catalogs:</td>
+					<td style="width:70%;" class="demo">	
+						<select class="balck">
+							<option>CSS</option>
+							<option>HTML </option>
+							<option>HTML 5</option>
+						</select>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" ><span>*</span>Course Selection:</td>
+					<td style="width:70%;" class="demo">	
+						<select class="balck">
+							<option>Select</option>
+							<option>HTML </option>
+							<option>HTML 5</option>
+						</select>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" class="subDateAlign">Subscription Date:</td>
+					<td style="width:70%;">	
+						<ul class="subDate">
+							<li><i class="fa fa-calendar fa-lg calender"></i><input type="date" class="popupInputDate" placeholder="MM/DD/YYYY"></li>
+							<li>To</li>
+							<li><i class="fa fa-calendar fa-lg calender1"></i><input type="date" class="popupInputDate" placeholder="MM/DD/YYYY"></li>
+						</ul>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" ><span>*</span>LTI Hash Code:</td>
+					<td style="width:70%;">	
+						<input type="checkbox" name="Add Subdomain" value="Add Subdomain" checked>Accelerate Ed
+					<input type="checkbox" name="Add Subdomain" value="Add Subdomain">Persons Contact	
+					</td>				
+				  </tr>
+				   <tr>
+					<td style="width:30%;" ><span>*</span>License Type:</td>
+					<td style="width:70%;" class="demo">	
+						<select class="balck">
+							<option>Pre-seat</option>
+							<option>HTML </option>
+							<option>HTML 5</option>
+						</select>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" ><span>*</span>Number of License:</td>
+					<td style="width:70%;" class="demo">	
+						<input type="text" class="popupInput" placeholder="Enter number here" />
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" ><span>*</span>License Pool:</td>
+					<td style="width:70%;" class="demo">	
+						<select class="balck">
+							<option>Fixed</option>
+							<option>HTML </option>
+							<option>HTML 5</option>
+						</select>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" ><span>*</span>Pilot Domain:</td>
+					<td style="width:70%;" class="demo">	
+						<input type="checkbox" name="Add Subdomain" value="Add Subdomain" checked>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" ><span>*</span>Pilot End Date:</td>
+					<td style="width:70%;">
+						<i class="fa fa-calendar fa-lg calender"></i>
+						<input type="date" class="popupInputDate" placeholder="MM/DD/YYYY">
+					</td>				
+				  </tr>				  
+				</table>
+			</div>	
+		</form>	
+		
+		<footer><div><button type="button" class="grayBttn bttnSpace submitdistrict floatRight">cancel</button><button type="button" class="greenBttn cancelistrict floatRight">Submit</button></div></footer>
+		
+		</div>
+<!--	  edit popup-->
+	  <div class="editpopupBox">
+		<header><hgroup><h1 class="floatLeft">Edit District Domain</h1><p class="closeAN"><img src="images/revoke.png"></p></hgroup></header>
+		<form>
+			<div>
+				<table class="formTable">				  
+				  <tr>
+					<td style="width:30%;" >State:</td>
+					<td style="width:70%;" class="demo">	
+						<select class="balck">
+							<option>CSS</option>
+							<option>HTML </option>
+							<option>HTML 5</option>
+						</select>
+					</td>				
+				  </tr>
+				  <tr>
+					<td><span>*</span>Domain Name:</td>
+					<td><input type="text" class="popupInput" /></td>	
+				  </tr>
+				  <tr>
+					<td><span>*</span>Login Prefix:</td>
+					<td><input type="text" class="popupInput" /></td>	
+				  </tr>
+				  <tr>
+					<td><span>*</span>External ID:</td>
+					<td><input type="text" class="popupInput" /></td>	
+				  </tr>
+				  <tr>
+					<td><span>*</span>Subscription Type:</td>
+					<td><input type="radio" name="Add Subdomain" value="Add Subdomain" checked>Entire Catalog
+					<input type="radio" name="Add Subdomain" value="Add Subdomain" checked>Selective Courses</td>	
+				  </tr>
+				  <tr>
+					<td style="width:30%;" >Course Catalogs:</td>
+					<td style="width:70%;" class="demo">	
+						<select class="balck">
+							<option>CSS</option>
+							<option>HTML </option>
+							<option>HTML 5</option>
+						</select>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" >Course Selection:</td>
+					<td style="width:70%;" class="demo">	
+						<select class="balck">
+							<option>Select</option>
+							<option>HTML </option>
+							<option>HTML 5</option>
+						</select>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" class="subDateAlign">Subscription Date:</td>
+					<td style="width:70%;">	
+						<ul class="subDate">
+							<li><i class="fa fa-calendar fa-lg calender"></i><input type="date" class="popupInputDate" placeholder="MM/DD/YYYY"></li>
+							<li>To</li>
+							<li><i class="fa fa-calendar fa-lg calender1"></i><input type="date" class="popupInputDate" placeholder="MM/DD/YYYY"></li>
+						</ul>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" >LTI Hash Code:</td>
+					<td style="width:70%;">	
+						<input type="checkbox" name="Add Subdomain" value="Add Subdomain" checked>Accelerate Ed
+					<input type="checkbox" name="Add Subdomain" value="Add Subdomain">Persons Contact	
+					</td>				
+				  </tr>
+				   <tr>
+					<td style="width:30%;" >License Type:</td>
+					<td style="width:70%;" class="demo">	
+						<select class="balck">
+							<option>Pre-seat</option>
+							<option>HTML </option>
+							<option>HTML 5</option>
+						</select>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" >Number of License:</td>
+					<td style="width:70%;" class="demo">	
+						<input type="text" class="popupInput" placeholder="Enter number here" />
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" >License Pool:</td>
+					<td style="width:70%;" class="demo">	
+						<select class="balck">
+							<option>Fixed</option>
+							<option>HTML </option>
+							<option>HTML 5</option>
+						</select>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" >Pilot Domain:</td>
+					<td style="width:70%;" class="demo">	
+						<input type="checkbox" name="Add Subdomain" value="Add Subdomain" checked>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" >Pilot End Date:</td>
+					<td style="width:70%;">
+						<i class="fa fa-calendar fa-lg calender"></i>
+						<input type="date" class="popupInputDate" placeholder="MM/DD/YYYY">
+					</td>				
+				  </tr>				  
+				</table>
+			</div>	
+		</form>	
+		
+		<footer><div><button type="button" class="grayBttn bttnSpace editsubmit floatRight">cancel</button><button type="button" class="greenBttn editcancel floatRight">Save</button></div></footer>
+		
+		</div>
+	  
+	  
+	  <!--	 Add school edit popup-->
+	  <div class="addschlpopupBox">
+		<header><hgroup><h1 class="floatLeft">Create a New School Domain</h1><p class="closeAN"><img src="images/revoke.png"></p></hgroup></header>
+		<form>
+			<div>
+				<table class="formTable">				  
+				  <tr>
+					<td style="width:30%;" >State:</td>
+					<td style="width:70%;" class="demo">	
+						<select class="balck">
+							<option>CSS</option>
+							<option>HTML </option>
+							<option>HTML 5</option>
+						</select>
+					</td>				
+				  </tr>
+				  <tr>
+					<td><span>*</span>District:</td>
+					<td><input type="text" class="popupInput" /></td>	
+				  </tr>
+				  <tr>
+					<td><span>*</span>School Domain Name:</td>
+					<td><input type="text" class="popupInput" /></td>	
+				  </tr>
+				  <tr>
+					<td><span>*</span>Login Prefix:</td>
+					<td><input type="text" class="popupInput" /></td>	
+				  </tr>
+				  <tr>
+					<td><span>*</span>External ID:</td>
+					<td><input type="text" class="popupInput" /></td>	
+				  </tr>
+				  <tr>
+					<td style="width:30%;" >License Type:</td>
+					<td style="width:70%;" class="demo">	
+						<select class="balck">
+							<option>CSS</option>
+							<option>HTML </option>
+							<option>HTML 5</option>
+						</select>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" >License Pool:</td>
+					<td style="width:70%;" class="demo">	
+						<select class="balck">
+							<option>Select</option>
+							<option>HTML </option>
+							<option>HTML 5</option>
+						</select>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" class="subDateAlign">Number Of License:</td>
+					<td><input type="text" class="popupInput" /></td>					
+				  </tr>				  				  
+				  <tr>
+					<td style="width:30%;" >Number of License:</td>
+					<td style="width:70%;" class="demo">	
+						<input type="text" class="popupInput" placeholder="Enter number here" />
+					</td>				
+				  </tr>				 
+				  <tr>
+					<td style="width:30%;" >Pilot Domain:</td>
+					<td style="width:70%;" class="demo">	
+						<input type="checkbox" name="Add Subdomain" value="Add Subdomain" checked>
+					</td>				
+				  </tr>
+				  <tr>
+					<td style="width:30%;" >Pilot End Date:</td>
+					<td style="width:70%;">
+						<i class="fa fa-calendar fa-lg calender"></i>
+						<input type="date" class="popupInputDate" placeholder="MM/DD/YYYY">
+					</td>				
+				  </tr>				  
+				</table>
+			</div>	
+		</form>	
+		
+		<footer><div><button type="button" class="grayBttn bttnSpace schlsubmit floatRight">cancel</button><button type="button" class="greenBttn schlcancel floatRight">Save</button></div></footer>
+		
+		</div>
+	  
+	  
+	  
+	  
+	  
+	  
+<!--        <nav class="breadCrumb">
+          <p><a class="active" href="#">lm-domain1</a> / <a href="#">lm-test1</a></p>
+        </nav>
+
+        <section class="domainTab">
+
+          <div class="domainHead">
+            <hgroup><h1 class="floatLeft">lm-domain1</h1></hgroup>
+            <p class="floatRight">
+              <span class="domainTabSH"><img class="dropArrow" src="images/dropArrow.png"/><img class="upArrow" src="images/upArrow.png"/></span>
+            <ul class="options floatRight">
+              <li><i class="fa fa-search fa-lg"></i><a href="#">find</a></li>
+              <li><i class="fa fa-pencil fa-lg"></i><a href="#">edit</a></li>
+            </ul>
+            </p>
+          </div>
+
+          <div class="domainHeadDetails">
+            <table class="tg">				  
+              <tr>
+                <td style="width:4%;" >Name: </td>
+                <td style="width:23%;" >lm-test1.1</td>
+                <td style="width:10%;" >Login Prefix: </td>
+                <td style="width:23%;" >lm-testsub</td>
+                <td style="width:10%;" >Conference server type:</td>
+                <td style="width:10%;" >None</td>
+              </tr>
+              <tr>
+                <td >Id: </td>
+                <td >21536</td>
+                <td >External ID:</td>
+                <td >lm-test1.1</td>
+                <td >Conference server URL:</td>
+                <td >None</td>
+              </tr>
+              <tr>
+                <td >Parent: </td>
+                <td >lm-test1.1(21536)</td>
+                <td >Parent External ID:</td>
+                <td >lm-test1</td>
+                <td ></td>
+                <td ></td>
+              </tr>
+            </table>
+          </div>
+
+        </section>
+        <div class="clear"></div>
+        <section class="tabSection">
+          <div id="tabSectionList">
+            <ul class="newDomTab">
+              <li class="active">Users</li>
+              <li>Subdomains</li>
+              <li>Content</li>
+              <li>Subscribers</li>
+              <li>Subscriptions</li>
+              <li>Reports</li>
+            </ul>
+          </div>
+          <div id="tabSectionListBox">
+            <div class="listBox usersDiv">
+              <div class="users">
+                <hgroup><h1 class="floatLeft">users</h1></hgroup>
+                 <p class="search"><input type="text" placeholder="search"/><span class="SearchClick"></span></p>
+                						<div class="newDomain floatRight">ass users</div>
+              </div>
+              <table class="userTable">				  
+                <tr>
+                  <th>user ID </th>
+                  <th>External ID</th>
+                  <th>first name</th>
+                  <th>last name</th>
+                  <th>username</th>
+                  <th>Login Prefix</th>
+                  <th>Email</th>
+                  <th>role</th>
+                  <th>Description</th>
+                  <th>Action</th>
+                </tr>
+                <tr>
+                  <td >354820</td>
+                  <td >354820</td>
+                  <td >Lorem</td>                  
+                  <td >Ipsum</td>
+                  <td>admin1</td>
+                  <td>lm-domain1</td>
+                  <td>admin1@lm.com</td>
+                  <td >Lorem</td>    
+                  <td></td>
+                  <td >
+                    <ul class="SDAction">
+                      								<li><i class="fa fa-folder-open-o fa-lg"></i><a href="#">Grant</a></li>
+                      <li><i class="fa fa-pencil fa-lg"></i><a href="#">Edit</a></li>
+                      								<li><i class="fa fa-remove fa-lg"></i><a href="#">Revoke</a></li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td >354820</td>
+                  <td >354820</td>
+                  <td >Lorem</td>                  
+                  <td >Ipsum</td>
+                  <td>admin1</td>
+                  <td>lm-domain1</td>
+                  <td>admin1@lm.com</td>
+                  <td >Lorem</td>    
+                  <td></td>
+                  <td >
+                    <ul class="SDAction">
+                      								<li><i class="fa fa-folder-open-o fa-lg"></i><a href="#">Grant</a></li>
+                      <li><i class="fa fa-pencil fa-lg"></i><a href="#">Edit</a></li>
+                      								<li><i class="fa fa-remove fa-lg"></i><a href="#">Revoke</a></li>
+                    </ul>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="listBox subDomainsDiv">
+              <div class="subDomains">
+                <hgroup><h1 class="floatLeft">subDomains</h1></hgroup>
+                <div class="newDomain floatRight">new domain</div>
+              </div>
+              <table class="sd">				  
+                <tr>
+                  <th>Domain ID </th>
+                  <th>Name</th>
+                  <th>Login Prefix </th>
+                  <th>External ID</th>
+                  <th>Action</th>
+                </tr>
+                <tr>
+                  <td >354820</td>
+                  <td >Lorem</td>
+                  <td >Lorem</td>
+                  <td >354820</td>
+                  <td >
+                    <ul class="SDAction">
+                      <li><i class="fa fa-folder-open-o fa-lg"></i><a href="#">Open</a></li>
+                      <li><i class="fa fa-pencil fa-lg"></i><a href="#">Edit</a></li>
+                      <li><i class="fa fa-trash-o fa-lg"></i><a href="#">Delete</a></li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td >48541583</td>
+                  <td >Lorem</td>
+                  <td >Lorem</td>
+                  <td >48541583</td>
+                  <td >
+                    <ul class="SDAction">
+                      <li><i class="fa fa-folder-open-o fa-lg"></i><a href="#">Open</a></li>
+                      <li><i class="fa fa-pencil fa-lg"></i><a href="#">Edit</a></li>
+                      <li><i class="fa fa-trash-o fa-lg"></i><a href="#">Delete</a></li>
+                    </ul>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="listBox contentDiv">
+              <div class="subDomains">
+                <hgroup><h1 class="floatLeft">content</h1></hgroup>
+                <div class="newDomain floatRight">new domain</div>
+              </div>
+              <table class="sd">				  
+                <tr>
+                  <th>Domain ID </th>
+                  <th>Name</th>
+                  <th>Name</th>
+                  <th>Login Prefix </th>
+                  <th>External ID</th>
+                  <th>External ID</th>
+                  <th>Action</th>
+                </tr>
+                <tr>
+                  <td >354820</td>
+                  <td >354820</td>
+                  <td >Lorem</td>
+                  <td >Lorem</td>
+                  <td >Lorem</td>
+                  <td >354820</td>
+                  <td >
+                    <ul class="SDAction">
+                      <li><i class="fa fa-folder-open-o fa-lg"></i><a href="#">Open</a></li>
+                      <li><i class="fa fa-pencil fa-lg"></i><a href="#">Edit</a></li>
+                      <li><i class="fa fa-trash-o fa-lg"></i><a href="#">Delete</a></li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td >48541583</td>
+                  <td >48541583</td>
+                  <td >48541583</td>
+                  <td >Lorem</td>
+                  <td >Lorem</td>
+                  <td >48541583</td>
+                  <td >
+                    <ul class="SDAction">
+                      <li><i class="fa fa-folder-open-o fa-lg"></i><a href="#">Open</a></li>
+                      <li><i class="fa fa-pencil fa-lg"></i><a href="#">Edit</a></li>
+                      <li><i class="fa fa-trash-o fa-lg"></i><a href="#">Delete</a></li>
+                    </ul>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="listBox subscribersDiv">
+              <div class="subDomains">
+                <hgroup><h1 class="floatLeft">subscribersDiv</h1></hgroup>
+                <div class="newDomain floatRight">new domain</div>
+              </div>
+              <table class="sd">				  
+                <tr>
+                  <th>Domain ID </th>
+                  <th>Name</th>
+                  <th>Login Prefix </th>
+                  <th>External ID</th>
+                  <th>Action</th>
+                </tr>
+                <tr>
+                  <td >354820</td>
+                  <td >Lorem</td>
+                  <td >Lorem</td>
+                  <td >354820</td>
+                  <td >
+                    <ul class="SDAction">
+                      <li><i class="fa fa-folder-open-o fa-lg"></i><a href="#">Open</a></li>
+                      <li><i class="fa fa-pencil fa-lg"></i><a href="#">Edit</a></li>
+                      <li><i class="fa fa-trash-o fa-lg"></i><a href="#">Delete</a></li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td >48541583</td>
+                  <td >Lorem</td>
+                  <td >Lorem</td>
+                  <td >48541583</td>
+                  <td >
+                    <ul class="SDAction">
+                      <li><i class="fa fa-folder-open-o fa-lg"></i><a href="#">Open</a></li>
+                      <li><i class="fa fa-pencil fa-lg"></i><a href="#">Edit</a></li>
+                      <li><i class="fa fa-trash-o fa-lg"></i><a href="#">Delete</a></li>
+                    </ul>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="listBox subscriptionsDiv">
+              <div class="subDomains">
+                <hgroup><h1 class="floatLeft">Subscriptions</h1></hgroup>
+                <div class="newDomain floatRight">new domain</div>
+              </div>
+              <table class="sd">				  
+                <tr>
+                  <th>Domain ID </th>
+                  <th>Name</th>
+                  <th>Login Prefix </th>
+                  <th>Action</th>
+                </tr>
+                <tr>
+                  <td >354820</td>
+                  <td >Lorem</td>
+                  <td >354820</td>
+                  <td >
+                    <ul class="SDAction">
+                      <li><i class="fa fa-folder-open-o fa-lg"></i><a href="#">Open</a></li>
+                      <li><i class="fa fa-pencil fa-lg"></i><a href="#">Edit</a></li>
+                      <li><i class="fa fa-trash-o fa-lg"></i><a href="#">Delete</a></li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td >48541583</td>
+                  <td >Lorem</td>
+                  <td >48541583</td>
+                  <td >
+                    <ul class="SDAction">
+                      <li><i class="fa fa-folder-open-o fa-lg"></i><a href="#">Open</a></li>
+                      <li><i class="fa fa-pencil fa-lg"></i><a href="#">Edit</a></li>
+                      <li><i class="fa fa-trash-o fa-lg"></i><a href="#">Delete</a></li>
+                    </ul>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="listBox reportsDiv">
+              <div class="subDomains">
+                <hgroup><h1 class="floatLeft">reports</h1></hgroup>
+                <div class="newDomain floatRight">new domain</div>
+              </div>
+              <table class="sd">				  
+                <tr>
+                  <th>Domain ID </th>
+                  <th>Name</th>
+                  <th>Login Prefix </th>
+                  <th>External ID</th>
+                  <th>External ID</th>
+                  <th>External ID</th>
+                  <th>Action</th>
+                </tr>
+                <tr>
+                  <td >354820</td>
+                  <td >354820</td>
+                  <td >354820</td>
+                  <td >Lorem</td>
+                  <td >Lorem</td>
+                  <td >354820</td>
+                  <td >
+                    <ul class="SDAction">
+                      <li><i class="fa fa-folder-open-o fa-lg"></i><a href="#">Open</a></li>
+                      <li><i class="fa fa-pencil fa-lg"></i><a href="#">Edit</a></li>
+                      <li><i class="fa fa-trash-o fa-lg"></i><a href="#">Delete</a></li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td >48541583</td>
+                  <td >Lorem</td>
+                  <td >Lorem</td>
+                  <td >Lorem</td>
+                  <td >Lorem</td>
+                  <td >48541583</td>
+                  <td >
+                    <ul class="SDAction">
+                      <li><i class="fa fa-folder-open-o fa-lg"></i><a href="#">Open</a></li>
+                      <li><i class="fa fa-pencil fa-lg"></i><a href="#">Edit</a></li>
+                      <li><i class="fa fa-trash-o fa-lg"></i><a href="#">Delete</a></li>
+                    </ul>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+          </div>
+        </section>-->
+<div class="dummydata"></div>
+        <footer id="footer">
+          <p class="copyRText CRTLanding">Copyright 2016 School Improvement Network</p>
+          <p><img src="images/footerLogo.png"/></p>
+        </footer>
+      </div>
+      <!--<script src="js/adminpage.js"></script>-->
+    </div>
+  </body>
+</html>
