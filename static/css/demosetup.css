@@ -1644,3 +1644,13 @@ input[type=radio] {
 .body_panel p:first-child{padding:10px 0; font-size:14px}
 
 /*--------------demo css----------------*/	
+.box_content .list-group .list-group-item:first-child{
+    border-radius:none;
+    border-radius: 0 !important;
+    border-left: none;
+    border-right: none;
+}
+.box_content .list-group{box-shadow:none; margin-bottom:0;margin-top: -1px;}
+
+.box_content .list-group .list-group-item:last-child{border-radius:none;}
+.box_content .panel-default > .panel-heading{border-bottom:1px solid #ddd;}

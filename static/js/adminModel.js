@@ -42,8 +42,10 @@ var AdminModel = function() {
 		_totalCourseArry: [],
 		_globalLicensecNum: 0,
 		_globalSccessToken: "",
-        _demoDomainUrl:'http://localhost:9090/provision/domain/list/all/47583342',
-        _copyDomainUrl:'http://localhost:9090/provision/domain/create/demo?'
+//        _demoDomainUrl:'http://localhost:9090/provision/domain/list/all/47583342',
+//        _copyDomainUrl:'http://localhost:9090/provision/domain/create/demo?'
+        _demoDomainUrl:'http://192.168.2.105:9090/provision/domain/list/all/47583342',
+        _copyDomainUrl:'http://192.168.2.105:9090/provision/domain/create/demo?'
 	}
 	this.get = function(parameter) {
 		return this.defaults[parameter];
