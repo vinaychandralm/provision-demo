@@ -1,24 +1,24 @@
-$('document').ready(function() {
+$('document').ready(function () {
     var adminModel = new AdminModel();
     var adminView = new AdminView(adminModel);
     adminView.init();
     adminView.cursorwait();
-    
-    
-   
-  $('.spinner .btn:first-of-type').on('click', function() {
-    $('.spinner input').val( parseInt($('.spinner input').val(), 10) + 1);
-  });
-  $('.spinner .btn:last-of-type').on('click', function() {
-    $('.spinner input').val( parseInt($('.spinner input').val(), 10) - 1);
-  });
+
+
+
+    $('.spinner .btn:first-of-type').on('click', function () {
+        $('.spinner input').val(parseInt($('.spinner input').val(), 10) + 1);
+    });
+    $('.spinner .btn:last-of-type').on('click', function () {
+        $('.spinner input').val(parseInt($('.spinner input').val(), 10) - 1);
+    });
 
 });
-var AdminView = function(model) {
+var AdminView = function (model) {
     var self = this;
     this.model = model;
 
-    this.init = function() {
+    this.init = function () {
         if (!sessionStorage.getItem('data')) {
             self.logout();
             return;
@@ -27,7 +27,7 @@ var AdminView = function(model) {
         this.model.ajaxCalConfig();
     };
 
-    this.loadPage = function() {
+    this.loadPage = function () {
 
         var parseJson = JSON.parse(sessionStorage.getItem('data'));
         self.model.set('_globalSccessToken', parseJson.loginToken);
@@ -36,14 +36,14 @@ var AdminView = function(model) {
         self.screenload();
         self.htmlloading();
         self.bindevent();
-        $(".popupInputDate").each(function() {
+        $(".popupInputDate").each(function () {
             $(this).datepicker({
                 dateFormat: "mm-dd-yy"
             });
         });
     };
 
-    this.htmlloading = function() {
+    this.htmlloading = function () {
         var parseJson = JSON.parse(sessionStorage.getItem('data'));
         $('.domainHead h1').html(parseJson.domainname);
         $('.breadCrumb a:eq(0)').html(parseJson.userspace);
@@ -54,26 +54,26 @@ var AdminView = function(model) {
         self.model.set('_globalSccessToken', parseJson.loginToken);
     };
 
-    this.screenload = function() {
+    this.screenload = function () {
         $('.addNew,.upArrow').hide();
-        $('.newDomTab li').each(function(k) {
-            $('.newDomTab li').attr('id', function(k) {
+        $('.newDomTab li').each(function (k) {
+            $('.newDomTab li').attr('id', function (k) {
                 return "tab_" + k;
             });
         });
-        $('.listBox').each(function() {
-            $('.listBox').attr('id', function(l) {
+        $('.listBox').each(function () {
+            $('.listBox').attr('id', function (l) {
                 return "panel_" + l;
             });
         });
     };
 
-    this.bindevent = function() {
+    this.bindevent = function () {
         this.model.set({
             'win_height': $(window).height(),
             'win_width': $(window).width()
         });
-        $('.circlePlus').off('click').on('click', function() {
+        $('.circlePlus').off('click').on('click', function () {
             self.circlePlusHandler();
         });
         var result = self.model.get('configResult'),
@@ -83,219 +83,219 @@ var AdminView = function(model) {
             loginPrefx = '',
             loginUndifndChk = '',
             loginArray = [];
-        $('input.domain-name,input.login-prefix,input.external-id,input.license-number,input.schldomainname,input.loginprefix,input.externalid,input.license-number').off('keyup').on('keyup', function() {
+        $('input.domain-name,input.login-prefix,input.external-id,input.license-number,input.schldomainname,input.loginprefix,input.externalid,input.license-number').off('keyup').on('keyup', function () {
             self.applyMaxLimit($(this));
         });
-        $('.loginPrefix,#snw_Enter_Login_Prefix').keyup(function() {
+        $('.loginPrefix,#snw_Enter_Login_Prefix').keyup(function () {
             self.loginKeyUpPrefix($(this));
         });
-        $('#snw_License').off('keyup').on('keyup', function() {
+        $('#snw_License').off('keyup').on('keyup', function () {
 
             self.numberValidation($(this));
         });
-        $('#snw_License1').off('keyup').on('keyup', function() {
+        $('#snw_License1').off('keyup').on('keyup', function () {
             self.numberValidation($(this));
         });
-        $('#licence-number').off('keyup').on('keyup', function(event) {
+        $('#licence-number').off('keyup').on('keyup', function (event) {
             self.numberValidation($(this));
         });
-        $('#snwlicense-number').off('keyup').on('keyup', function() {
+        $('#snwlicense-number').off('keyup').on('keyup', function () {
             self.numberValidation($(this));
         });
-        $('.domainName,#snw_Enter_School').keyup(function() {
+        $('.domainName,#snw_Enter_School').keyup(function () {
             self.domainNameKeyUp($(this), loginArray);
         });
-        $('.closeAN').off('click').on('click', function() {
+        $('.closeAN').off('click').on('click', function () {
             self.saveProviderListData();
             $('.grayBg,.popGrayBg,.editschlpopupBox').hide();
             $('.popupBox,.editpopupBox,.addschlpopupBox').hide();
             self.cursordefault();
         });
-        $('.popupBox .subscription-end,.editpopupBox .subscription-end').unbind('change paste keyup').bind("change paste keyup", function() {
+        $('.popupBox .subscription-end,.editpopupBox .subscription-end').unbind('change paste keyup').bind("change paste keyup", function () {
             self.popupBoxHandler();
         });
-        $('.popupBox .loginPrefix').off('keydown').on("keydown", function(e) {
+        $('.popupBox .loginPrefix').off('keydown').on("keydown", function (e) {
             if (e.keyCode === 32) {
                 return false;
             }
         });
-        $('.addschlpopupBox .loginprefix').off('keydown').on("keydown", function(e) {
+        $('.addschlpopupBox .loginprefix').off('keydown').on("keydown", function (e) {
             if (e.keyCode === 32) {
                 return false;
             }
         });
-        $('.submitdistrict').off('click').on('click', function() {
+        $('.submitdistrict').off('click').on('click', function () {
             self.submitDistrictHandler($(this));
         });
-        $('.cancelistrict').off('click').on('click', function() {
+        $('.cancelistrict').off('click').on('click', function () {
             self.saveProviderListData();
             $('.grayBg').hide();
             $('.popGrayBg').hide();
             $('.popupBox,.editpopupBox').hide();
         });
-        $('.editsubmit').off('click').on('click', function() {
+        $('.editsubmit').off('click').on('click', function () {
             self.editSubmitHandler($(this));
         });
-        $('.editcancel').off('click').on('click', function() {
+        $('.editcancel').off('click').on('click', function () {
             self.saveProviderListData();
             $('.grayBg').hide();
             $('.popGrayBg').hide();
             $('.popupBox,.editpopupBox').hide();
         });
-        $('.schleditsubmit').off('click').on('click', function() {
+        $('.schleditsubmit').off('click').on('click', function () {
             self.schlEditSubmitHandler($(this));
         });
-        $('.editwelcome').off('click').on('click', function() {
+        $('.editwelcome').off('click').on('click', function () {
             self.domainWelcomeLetter();
         });
         $('.editschoolwelcome').off('click').on('click', function () {
             self.schoolWelcomeLetter();
         });
-        $('.editAddSchool').off('click').on('click', function() {
+        $('.editAddSchool').off('click').on('click', function () {
             self.editAddSchool($(this))
         });
         //      34894868
-        $('.schlsubmit').off('click').on('click', function() {
+        $('.schlsubmit').off('click').on('click', function () {
             self.schlsubmitHandler($(this));
         });
-        $('.schlcancel').off('click').on('click', function() {
+        $('.schlcancel').off('click').on('click', function () {
             self.saveProviderListData();
             $('.grayBg').hide();
             $('.popGrayBg,.editschlpopupBox').hide();
             $('.addschlpopupBox').hide();
         });
-        $('.loginPerson').off('click').on('click', function() {
+        $('.loginPerson').off('click').on('click', function () {
             $('.LPMenu').toggle();
             return false;
         });
-        $('.createpopupradio input,.editpopupradio input').off('change').on('change', function() {
+        $('.createpopupradio input,.editpopupradio input').off('change').on('change', function () {
             self.createPopupRadio($(this))
         });
-        $('.disTrictList').off('click').on('click', function() {
+        $('.disTrictList').off('click').on('click', function () {
             self.disTrictListHandler($(this));
         });
-        $('.showEntry').off('change').on('change', function() {
+        $('.showEntry').off('change').on('change', function () {
             self.showEntryHandler($(this));
         });
-        $('.NextCir').off('click').on('click', function() {
+        $('.NextCir').off('click').on('click', function () {
             self.NextCirHandler($(this));
         });
-        $('.PreviousCir').off('click').on('click', function() {
+        $('.PreviousCir').off('click').on('click', function () {
             self.PreviousCirHandler($(this));
         });
-        $('.DomainNext').off('click').on('click', function() {
+        $('.DomainNext').off('click').on('click', function () {
             self.DomainNextHandler($(this));
         });
-        $('.DomainPrevious').off('click').on('click', function() {
+        $('.DomainPrevious').off('click').on('click', function () {
             self.DomainPreviousHandler($(this));
         });
-        $('.domain-showEntry').off('change').on('change', function() {
+        $('.domain-showEntry').off('change').on('change', function () {
             self.domainShowEntryHandler($(this));
         });
-        $('.newDomTab li').off('click').on('click', function() {
+        $('.newDomTab li').off('click').on('click', function () {
             self.newDomTabHandler($(this));
         });
-        $('.adminNav li').off('click').on('click', function() {
+        $('.adminNav li').off('click').on('click', function () {
             self.adminNav($(this));
         });
-        $('.adminNav li:eq(1)').off('click').on('click', function() {
+        $('.adminNav li:eq(1)').off('click').on('click', function () {
             console.log("District - 202");
             self.adminNavFirst($(this));
         });
-        $('.entire-catalog').off('click').on('click', function() {
+        $('.entire-catalog').off('click').on('click', function () {
 
             self.entireCatalogSelected($(this));
         });
-        $('.selective-course').off('click').on('click', function() {
+        $('.selective-course').off('click').on('click', function () {
             self.selectiveCourseCatalogSelected($(this))
         });
-        $('.corsecatalog').off('click').on('click', function(e) {
+        $('.corsecatalog').off('click').on('click', function (e) {
             self.courseCatalogHandler(e)
         });
-        $('.coursSelect').off('click').on('click', function(e) {
+        $('.coursSelect').off('click').on('click', function (e) {
             self.courseSelectHandler(e);
         });
-        $('.searchbox').off('keypress').on('keypress', function(e) {
+        $('.searchbox').off('keypress').on('keypress', function (e) {
             if (e.keyCode == 13) {
                 $('.SearchClick').trigger('click');
             }
         });
-        $('.SearchClick').off('click keyup').on('click keyup', function(e) {
+        $('.SearchClick').off('click keyup').on('click keyup', function (e) {
             self.SearchClickHandler();
         });
-        $(document.body).off("click tap").on("click tap", function(e) {
+        $(document.body).off("click tap").on("click tap", function (e) {
             self.documentClickHandler(e);
         });
-        $('.distrctadd').off('click').on('click', function() {
+        $('.distrctadd').off('click').on('click', function () {
             self.distrctAddHandler($(this));
         });
-        $('.catalog-list input').off('change').on('change', function() {
+        $('.catalog-list input').off('change').on('change', function () {
             self.catalogListInputHandler($(this));
         });
-        $('.edit').off('click').on('click', function() {
+        $('.edit').off('click').on('click', function () {
             self.editDistrictHandler($(this));
         });
-        $('.addschool').off('click').on('click', function() {
+        $('.addschool').off('click').on('click', function () {
             self.addSchoolHandler($(this));
         });
-        $('.addschlpopupBox .addschoollist').off('change').on('change', function() {
+        $('.addschlpopupBox .addschoollist').off('change').on('change', function () {
             self.addSchlPopupBox($(this));
         });
-        $('.editschlpopupBox .addschoollist').off('change').on('change', function() {
+        $('.editschlpopupBox .addschoollist').off('change').on('change', function () {
             self.addSchlPopupBox($(this));
         });
-        $('.addschlpopupBox .schooldistrictlist').off('change').on('change', function() {
+        $('.addschlpopupBox .schooldistrictlist').off('change').on('change', function () {
             self.editSchoolDistrictList($(this));
         });
-        $('.editschlpopupBox .schooldistrictlist').off('change').on('change', function() {
+        $('.editschlpopupBox .schooldistrictlist').off('change').on('change', function () {
             self.editSchoolDistrictList($(this));
         });
-        $('.corsecatalogList input[type="checkbox"]').off().on("click", function() {
+        $('.corsecatalogList input[type="checkbox"]').off().on("click", function () {
             self.courseCatalogListInput($(this));
         });
-        $('#snwselectCourse input').off('change').on('change', function() {
+        $('#snwselectCourse input').off('change').on('change', function () {
             self.radioButton('popupBox');
         });
-        $('#snwSelectCourse input').off('change').on('change', function() {
+        $('#snwSelectCourse input').off('change').on('change', function () {
             self.radioButton('editpopupBox');
         });
         // $('')
-        $('.editSchoolpop').off('click').on('click', function() {
+        $('.editSchoolpop').off('click').on('click', function () {
             self.editSchoolPopHandler($(this));
         });
-        $('#snwreportsLienceLi1').off('click').on('click', function() {
+        $('#snwreportsLienceLi1').off('click').on('click', function () {
             self.snwReportsLienceLiFirst($(this));
         });
-        $('#snwreportsLienceLi2').off('click').on('click', function() {
+        $('#snwreportsLienceLi2').off('click').on('click', function () {
             self.snwreportsLienceLiSec($(this));
         });
-        $('.reportfisrtedit').off('click').on('click', function() {
+        $('.reportfisrtedit').off('click').on('click', function () {
             self.reportfisrteditHandler()
         });
-        $('.reportpost2').off('click').on('click', function() {
+        $('.reportpost2').off('click').on('click', function () {
             self.reportPostSec();
         });
-        $('.adminNav li:eq(0)').off('click').on('click', function() {
+        $('.adminNav li:eq(0)').off('click').on('click', function () {
             self.adminNavZero();
             console.log("District - 279");
             $('.adminNav li:eq(2)').removeClass('demoSetupActive');
         });
-        $('.stateListing').off('click').on('click', function(e) {
+        $('.stateListing').off('click').on('click', function (e) {
             self.stateListingHandler(e);
         });
-        $('.domainListing').off('click').on('click', function(e) {
+        $('.domainListing').off('click').on('click', function (e) {
             self.domainListingHandler(e);
         });
         $("#snwselectInput, #snwselectCourse, #snwSelectInput, #snwSelectCourse").select2({
             placeholder: "Select Catalogs"
         });
-        $("#snwselectInput, .catalog-list .selectInput").off("select2:select").on("select2:select", function(e) {
+        $("#snwselectInput, .catalog-list .selectInput").off("select2:select").on("select2:select", function (e) {
             self.courseCatalogsSelected($(e.params.data.element));
         });
-        $("#snwselectInput, .catalog-list .selectInput").off("select2:unselect").on("select2:unselect", function(e) {
+        $("#snwselectInput, .catalog-list .selectInput").off("select2:unselect").on("select2:unselect", function (e) {
 
             if ($(e.params.data.element).hasClass('newEle') || $(e.params.data.element).parents('.addschlpopupBox').length > 0 || $(e.params.data.element).parents('.popupBox').length > 0
-            		|| ($.inArray($(e.params.data.element).attr('data-domain-id'),self.model.get('_domain').data.subscribedproviderlist))==-1) {
+                || ($.inArray($(e.params.data.element).attr('data-domain-id'), self.model.get('_domain').data.subscribedproviderlist)) == -1) {
                 self.courseCatalogsUnSelected($(e.params.data.element));
             } else {
                 $(e.params.data.element).prop('selected', 'selected');
@@ -303,14 +303,14 @@ var AdminView = function(model) {
                 alert('You cannot remove course(s) from course catalogs selection.');
             }
         });
-        $("#snwselectCourse, .course-list .selectCourse").off("select2:select").on("select2:select", function(e) {
+        $("#snwselectCourse, .course-list .selectCourse").off("select2:select").on("select2:select", function (e) {
             self.courseSelectedAction($(e.params.data.element));
         });
 
-        $("#snwselectCourse, .course-list .selectCourse").off("select2:unselect").on("select2:unselect", function(e) {
+        $("#snwselectCourse, .course-list .selectCourse").off("select2:unselect").on("select2:unselect", function (e) {
 
             if ($(e.params.data.element).hasClass('newEle') || $(e.params.data.element).parents('.addschlpopupBox').length > 0 || $(e.params.data.element).parents('.popupBox').length > 0
-            		|| ($.inArray($(e.params.data.element).attr('data-course-id'),self.model.get('_domain').data.subscribedcourselist))==-1) {
+                || ($.inArray($(e.params.data.element).attr('data-course-id'), self.model.get('_domain').data.subscribedcourselist)) == -1) {
                 self.courseUnSelectedAction($(e.params.data.element));
             } else {
                 $(e.params.data.element).prop('selected', 'selected');
@@ -318,284 +318,357 @@ var AdminView = function(model) {
                 alert('You cannot remove this course from course list selection.');
             }
         });
-        
+
         //Attaching event handler of Demo Setup.
-        $('.adminNav li:eq(2)').off('click').on('click', function() {
-            if($('.adminNav li:eq(2)').hasClass('demoSetupActive')){
+        $('.adminNav li:eq(2)').off('click').on('click', function () {
+            if ($('.adminNav li:eq(2)').hasClass('demoSetupActive')) {
                 return
-            }else{
+            } else {
                 $('.adminNav li:eq(2)').addClass('demoSetupActive');
                 $('.panel-group').remove();
             }
-            
+
             self.showDemoSetUp();
         });
-        this.callCopyDomainAjax = function(distID,domainNumbers){
+        this.callCopyDomainAjax = function (distID, domainNumbers) {
             //domainid=47583453&noofdomain=2
-            
-            
+
+
             self.cursorwait();
-            console.log(self.model.get('_copyDomainUrl')+'domainid='+distID+'&noofdomain='+domainNumbers);
-        
-        $.ajax({ 
+            console.log(self.model.get('_copyDomainUrl') + 'domainid=' + distID + '&noofdomain=' + domainNumbers);
+
+            $.ajax({
                 type: "POST",
-                url: self.model.get('_copyDomainUrl')+'domainid='+distID+'&noofdomain='+domainNumbers,                        
+                url: self.model.get('_copyDomainUrl') + 'domainid=' + distID + '&noofdomain=' + domainNumbers,
                 contentType: "application/json",
                 success: function (response) {
-                crossDomain: true,
+                    // crossDomain: true,
                     console.log(response)
-                    if(response.messageType==="SUCCESS")
-                    {
+                    if (response.messageType === "SUCCESS") {
+                        
+                        var modalHtml=  self.getModalHtml(response );
+                        console.log(modalHtml);
+                        $('#popUpModal .modal-body').html(modalHtml);
+                        $('#popUpModal').modal('show');
 
-//                        self.filterDataForRadioList();
-//                        self.model.set('_demoDomainData',response.data.domains );
-                        $('#popUpModal .modal-body').text('Copy Successfull');
-                    $('#popUpModal').modal('show');
+                        // $('#popUpModal .modal-body').text('Copy Successfull');
+                        // $('#popUpModal').modal('show');
                     }
                     else if (response.messageType === "ERROR") {
                         $('#popUpModal .modal-body').text('Copy Unsuccessfull');
-                    $('#popUpModal').modal('show');
+                        $('#popUpModal').modal('show');
                     }
-                   self.cursordefault();
+                    self.cursordefault();
 
                 },
-                error:function(response){
-                    
+                error: function (response) {
+
                     $('#popUpModal .modal-body').text('Copy Unsuccessfull');
                     $('#popUpModal').modal('show');
-                    
-                    
-                    
-                    console.log("Error  ",response)  ;
+
+
+
+                    console.log("Error  ", response);
                     self.cursordefault();
                 },
-                    beforeSend: function(xhr, settings) {
-                        xhr.setRequestHeader('Authorization', 'Bearer ' + self.model.get('_globalSccessToken') );
-                    }
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + self.model.get('_globalSccessToken'));
+                }
             });
 
         };
-        $('#createLaunchBtn').off('click').on('click',function(){
-            
-            
-            console.log($('input[name=radio1]:checked', '.box_content').data('distid') );
-            var selectedRadioLen  =$('input[name=radio1]:checked', '.box_content').length;
-            var domainNumbers = parseInt($('.spinner input').val());
-            console.log(selectedRadioLen,domainNumbers)
-            if(domainNumbers > 0  && selectedRadioLen>0){
-                var selectedDistId = $('input[name=radio1]:checked', '.box_content').data('distid');
-                self.callCopyDomainAjax(selectedDistId,domainNumbers);
+        
+        this.getModalHtml=function(res ){
+            var len = res.data.domains.length;
+            var liEmenets = '';
+            self.model.downloadCourseId = [];
+            for(var i=0;i<len;i++){
+                liEmenets += '<li>(ID:'+res.data.domains[i].domainId +') '+ res.data.domains[i].name  +'</li>';
+                self.model.downloadCourseId.push(res.data.domains[i].domainId);
             }
+            
+            var msg = '<p>Demo domains are created successfully</p>';
+            var ulElem =msg+ '<div id="copiedListDiv"><ul>'+liEmenets+'<ul></div>';
+            return ulElem;
+        };
+        
+         $('#modalDownloadBtn').off('click').on('click', function () {
+             console.log('-----------',self.model.downloadCourseId.join());
+             
+             
+             $.ajax({
+                type: "GET",
+                url: self.model.get('__reportDownload') +self.model.downloadCourseId.join() ,
+                contentType: "application/json",
+                success: function (response) {
+                    // crossDomain: true,
+                    console.log(response)
+                  
+                },
+                error: function (response) {
+
+                },
+               
+            });
+             
+             
+         });
+         
+        $('#createLaunchBtn').off('click').on('click', function () {
+
+            console.log($('input[name=radio1]:checked', '.box_content').data('distid'));
+            var selectedRadioLen = $('input[name=radio1]:checked', '.box_content').length;
+            var domainNumbers = parseInt($('.spinner input').val());
+            console.log(selectedRadioLen, domainNumbers)
+            if (domainNumbers > 0 && selectedRadioLen > 0) {
+                var selectedDistId = $('input[name=radio1]:checked', '.box_content').data('distid');
+                self.callCopyDomainAjax(selectedDistId, domainNumbers);
+            }
+
+            // var res = {
+            //     "messageType": "SUCCESS",
+            //     "message": "Domain created successfully",
+            //     "data": {
+            //         "domains": [
+            //             {
+            //                 "domainId": "48268605",
+            //                 "name": "Edivate Learn Demo District-163239",
+            //                 "userspace": null,
+            //                 "parentId": null,
+            //                 "reference": null
+            //             },
+            //             {
+            //                 "domainId": "48269681",
+            //                 "name": "Edivate Learn Demo School 1",
+            //                 "userspace": null,
+            //                 "parentId": null,
+            //                 "reference": null
+            //             },
+            //             {
+            //                 "domainId": "48269682",
+            //                 "name": "Edivate Learn Demo School 2",
+            //                 "userspace": null,
+            //                 "parentId": null,
+            //                 "reference": null
+            //             }
+            //         ]
+            //     }
+            // }
+            
+            
+        //    var modalHtml=  self.getModalHtml('#popUpModal .modal-body',res );
+        //    console.log(modalHtml);
+        //     $('#popUpModal .modal-body').html(modalHtml);
+        //     $('#popUpModal').modal('show');
+
         });
-        
-        
+
+
         self.loginoutevent();
     };
 
-    this.showDemoSetUp = function(){
-     console.log("Demo Setup triggered");
+    this.showDemoSetUp = function () {
+        console.log("Demo Setup triggered");
         $('#adminContainer').hide();
         $('#snw-license-usage-report02').hide();
         $('#snw-license-usage-report05').hide();
         $('#demoSetupPage').show();
-        
+
         this.callDemoSetUpDataAjax();
         console.log("Ajax Called");
-        
+
     };
-    this.getDistrctDatas = function(){
-        
-        var domainModal =self.model.get('_demoDomainData');
+    this.getDistrctDatas = function () {
+
+        var domainModal = self.model.get('_demoDomainData');
         console.log(domainModal);
         var len = domainModal.length;
         var distObjArray = [];
-        for(var i=0;i< len; i++){
-         //   console.log(i);
-          //  var domaintype = domainModal[i].data.customization.edivatelearn.domaintype;
-           // console.log(domainModal[i])
+        for (var i = 0; i < len; i++) {
+            //   console.log(i);
+            //  var domaintype = domainModal[i].data.customization.edivatelearn.domaintype;
+            // console.log(domainModal[i])
             domaintypeobj = domainModal[i].data.customization;
-            if(domaintypeobj !=undefined && domaintypeobj !=null && domaintypeobj.edivatelearn !=null && domaintypeobj.edivatelearn !=undefined 
-             && domaintypeobj.edivatelearn.domaintype !=null && domaintypeobj.edivatelearn.domaintype != undefined)
-              {
+            if (domaintypeobj != undefined && domaintypeobj != null && domaintypeobj.edivatelearn != null && domaintypeobj.edivatelearn != undefined
+                && domaintypeobj.edivatelearn.domaintype != null && domaintypeobj.edivatelearn.domaintype != undefined) {
                 var domaintype = domaintypeobj.edivatelearn.domaintype;
-                if(domaintype ==='district'){
+                if (domaintype === 'district') {
                     var tempDeepCloned = $.extend(true, {}, domainModal[i]);
                     distObjArray.push(tempDeepCloned);
                 }
             }
         }
-     //   console.log(distObjArray);
+        //   console.log(distObjArray);
         return distObjArray;
-        
-        
+
+
     };
-    this.getDistrictSchool =function(distObject){
+    this.getDistrictSchool = function (distObject) {
         var distId = distObject.id;
-        var domainModal =self.model.get('_demoDomainData')
+        var domainModal = self.model.get('_demoDomainData')
         var len = domainModal.length;
         var schoolObjArray = [];
-        for(var i=0;i< len; i++){
-            
-            if(distId ===domainModal[i].parentid){
+        for (var i = 0; i < len; i++) {
+
+            if (distId === domainModal[i].parentid) {
                 var tempDeepCloned = $.extend(true, {}, domainModal[i]);
                 schoolObjArray.push(tempDeepCloned);
             }
-            
+
         }
         return schoolObjArray;
     };
-    this.filterDataForRadioList=function(){
-        
+    this.filterDataForRadioList = function () {
+
         var districtDomainObj = this.getDistrctDatas();
         var len = districtDomainObj.length;
-        for(var i=0; i<len;i++){
-            var scholldata = this.getDistrictSchool(districtDomainObj[i]);    
+        for (var i = 0; i < len; i++) {
+            var scholldata = this.getDistrictSchool(districtDomainObj[i]);
             districtDomainObj[i].listOfSchool = scholldata;
-        }   
-        
+        }
+
         //setting final Modal to be parsed by view for Demo domain radio list box
-        self.model.set('_distSchlDomainFilterData',districtDomainObj );
-        
+        self.model.set('_distSchlDomainFilterData', districtDomainObj);
+
         this.updateDemoDomainRadioList();
-        
+
     };
-    this.getDistricPanelHtml=function(distObj){
-    
-        
+    this.getDistricPanelHtml = function (distObj) {
+
+
         console.log(distObj);
-        return ('<div class="panel-heading" id=panel_'+distObj.id +'><h4 class="panel-title"><div class="chkboxWrap"> <div class="radio"><input type="radio"  value="option8" name="radio1" id = '+'radio_'+distObj.id+' Data-distid ='+distObj.id+' ><label for='+'radio_'+distObj.id+'> </label></div></div><a href='+'#collapse_'+distObj.id+' data-toggle="collapse" class="" aria-expanded="true"><span> <i class="fa fa-caret-down"></i></span><div>'+distObj.name+'</div></a></h4></div>');
+        return ('<div class="panel-heading" id=panel_' + distObj.id + '><h4 class="panel-title"><div class="chkboxWrap"> <div class="radio"><input type="radio"  value="option8" name="radio1" id = ' + 'radio_' + distObj.id + ' Data-distid =' + distObj.id + ' ><label for=' + 'radio_' + distObj.id + '> </label></div></div><a href=' + '#collapse_' + distObj.id + ' data-toggle="collapse" class="" aria-expanded="true"><span> <i class="fa fa-caret-down"></i></span><div>' + distObj.name + '</div></a></h4></div>');
     };
-    
-    this.getCollapableRowHtml = function(distObj){
-        
+
+    this.getCollapableRowHtml = function (distObj) {
+
         var len = distObj.listOfSchool.length;
-        if(len>0){
-            var collapsablelistRow = '<div class="panel-collapse collapse" id='+'collapse_'+distObj.id+' aria-expanded="false" style="height: 0px;"><ul class="list-group">';
-            var listRow=''
-            for(var i=0;i<len;i++){
-                listRow =  '<li class="list-group-item"><span class="txt_list">'+distObj.listOfSchool[i].name+'</span></li>';
+        if (len > 0) {
+            var collapsablelistRow = '<div class="panel-collapse collapse" id=' + 'collapse_' + distObj.id + ' aria-expanded="false" style="height: 0px;"><ul class="list-group">';
+            var listRow = ''
+            for (var i = 0; i < len; i++) {
+                listRow = '<li class="list-group-item"><span class="txt_list">' + distObj.listOfSchool[i].name + '</span></li>';
             }
             collapsablelistRow = collapsablelistRow + listRow + ' </ul></div>';
-            
+
             return collapsablelistRow;
-        }else{
+        } else {
             return '';
         }
-        
-        
-        
-        
-        
-//        <div class="panel-collapse collapse" id="collapse5" aria-expanded="false" style="height: 0px;">
-//                        <ul class="list-group">
-//                              <li class="list-group-item"> <span class="chkboxWrap" style="visibility:hidden;">
-//                                <div class="radio">
-//                                <input type="radio" checked="" value="option2" id="radio2" name="radio1">
-//                                <label for="radio2"> </label>
-//                              </div>
-//                                </span><span class="txt_list">School A School A School A School ASchool ASchool A</span></li>
-//                              <li class="list-group-item"><span class="chkboxWrap" style="visibility:hidden;">
-//                                <div class="radio">
-//                                <input type="radio" checked="" value="option3" id="radio3" name="radio1">
-//                                <label for="radio3"> </label>
-//                              </div>
-//                                </span><span class="txt_list">School B School B School B School B</span></li>
-//                            </ul>
-//                      </div>
+
+
+
+
+
+        //        <div class="panel-collapse collapse" id="collapse5" aria-expanded="false" style="height: 0px;">
+        //                        <ul class="list-group">
+        //                              <li class="list-group-item"> <span class="chkboxWrap" style="visibility:hidden;">
+        //                                <div class="radio">
+        //                                <input type="radio" checked="" value="option2" id="radio2" name="radio1">
+        //                                <label for="radio2"> </label>
+        //                              </div>
+        //                                </span><span class="txt_list">School A School A School A School ASchool ASchool A</span></li>
+        //                              <li class="list-group-item"><span class="chkboxWrap" style="visibility:hidden;">
+        //                                <div class="radio">
+        //                                <input type="radio" checked="" value="option3" id="radio3" name="radio1">
+        //                                <label for="radio3"> </label>
+        //                              </div>
+        //                                </span><span class="txt_list">School B School B School B School B</span></li>
+        //                            </ul>
+        //                      </div>
     }
-    this.updateDemoDomainRadioList=function(){
+    this.updateDemoDomainRadioList = function () {
         console.log("Update Domain Radio Button view");
-        
+
         console.log(self.model.get('_distSchlDomainFilterData'))
-        
+
         var distSchlArrayRef = self.model.get('_distSchlDomainFilterData');
         var distLen = distSchlArrayRef.length;
-        for(var i=0;i<distLen;i++){
+        for (var i = 0; i < distLen; i++) {
             var radioPanelRow = ' <div class="panel-group"><div class="panel panel-default">'
             var distTopCollapseablePanel = this.getDistricPanelHtml(distSchlArrayRef[i]);
             radioPanelRow = radioPanelRow + distTopCollapseablePanel + '</div></div>';
-            
+
             $('.box_content').append(radioPanelRow);
             var collapsableRow = this.getCollapableRowHtml(distSchlArrayRef[i]);
-            
-         //   $(collapsableRow).insertAfter('.panel-heading');
+
+            //   $(collapsableRow).insertAfter('.panel-heading');
             console.log(distSchlArrayRef[i].id);
-            $(collapsableRow).insertAfter('#panel_'+distSchlArrayRef[i].id)
+            $(collapsableRow).insertAfter('#panel_' + distSchlArrayRef[i].id)
         }
-        
-        
-        
-//        <div class="panel-group">
-//                    <div class="panel panel-default">
-//                          <div class="panel-heading">
-//                        <h4 class="panel-title">
-//                              <div class="chkboxWrap">
-//                            <div class="radio">
-//                                  <input type="radio" checked="" value="option8" id="radio8" name="radio1">
-//                                  <label for="radio8"> </label>
-//                                </div>
-//                          </div>
-//                              <a href="#collapse5" data-toggle="collapse" class="" aria-expanded="true"> <span> <i class="fa fa-caret-down"></i></span>
-//                          <div>District</div>
-//                          </a> </h4>
-//                      </div>
-//                          <div class="panel-collapse collapse in" id="collapse5" aria-expanded="true">
-//                        <ul class="list-group">
-//                              <li class="list-group-item"> <span class="chkboxWrap" style="visibility:hidden;">
-//                                <div class="radio">
-//                                <input type="radio" checked="" value="option2" id="radio2" name="radio1">
-//                                <label for="radio2"> </label>
-//                              </div>
-//                                </span><span class="txt_list">School A School A School A School ASchool ASchool A</span></li>
-//                              <li class="list-group-item"><span class="chkboxWrap" style="visibility:hidden;">
-//                                <div class="radio">
-//                                <input type="radio" checked="" value="option3" id="radio3" name="radio1">
-//                                <label for="radio3"> </label>
-//                              </div>
-//                                </span><span class="txt_list">School B School B School B School B</span></li>
-//                            </ul>
-//                      </div>
-//                        </div>
-//                  </div>
-//        
-                 
-        
-        
+
+
+
+        //        <div class="panel-group">
+        //                    <div class="panel panel-default">
+        //                          <div class="panel-heading">
+        //                        <h4 class="panel-title">
+        //                              <div class="chkboxWrap">
+        //                            <div class="radio">
+        //                                  <input type="radio" checked="" value="option8" id="radio8" name="radio1">
+        //                                  <label for="radio8"> </label>
+        //                                </div>
+        //                          </div>
+        //                              <a href="#collapse5" data-toggle="collapse" class="" aria-expanded="true"> <span> <i class="fa fa-caret-down"></i></span>
+        //                          <div>District</div>
+        //                          </a> </h4>
+        //                      </div>
+        //                          <div class="panel-collapse collapse in" id="collapse5" aria-expanded="true">
+        //                        <ul class="list-group">
+        //                              <li class="list-group-item"> <span class="chkboxWrap" style="visibility:hidden;">
+        //                                <div class="radio">
+        //                                <input type="radio" checked="" value="option2" id="radio2" name="radio1">
+        //                                <label for="radio2"> </label>
+        //                              </div>
+        //                                </span><span class="txt_list">School A School A School A School ASchool ASchool A</span></li>
+        //                              <li class="list-group-item"><span class="chkboxWrap" style="visibility:hidden;">
+        //                                <div class="radio">
+        //                                <input type="radio" checked="" value="option3" id="radio3" name="radio1">
+        //                                <label for="radio3"> </label>
+        //                              </div>
+        //                                </span><span class="txt_list">School B School B School B School B</span></li>
+        //                            </ul>
+        //                      </div>
+        //                        </div>
+        //                  </div>
+        //        
+
+
+
     }
-    this.callDemoSetUpDataAjax = function(){
+    this.callDemoSetUpDataAjax = function () {
         self.cursorwait();
-        
+
         $.ajax({
-                    type: "GET",
-                    url: self.model.get('_demoDomainUrl'),                        
-                    crossDomain: true,
-                    contentType: "application/json",
-                    success: function (response) {
-                        console.log(response)
-                        if(response.messageType==="SUCCESS")
-                        {
+            type: "GET",
+            url: self.model.get('_demoDomainUrl'),
+            crossDomain: true,
+            contentType: "application/json",
+            success: function (response) {
+                console.log(response)
+                if (response.messageType === "SUCCESS") {
 
-                            self.model.set('_demoDomainData',response.data.domains );
-                            self.filterDataForRadioList();
-                        }
-                        else if (response.messageType === "ERROR") {
+                    self.model.set('_demoDomainData', response.data.domains);
+                    self.filterDataForRadioList();
+                }
+                else if (response.messageType === "ERROR") {
 
-                        }
-                       self.cursordefault();
+                }
+                self.cursordefault();
 
-                    },
-                    error:function(response){
-                        console.log("Error  ",response)  ;
-                        self.cursordefault();
-                    },
-                    beforeSend: function(xhr, settings) {
-                        xhr.setRequestHeader('Authorization', 'Bearer ' + self.model.get('_globalSccessToken') );
-                    }
-                });
-        
+            },
+            error: function (response) {
+                console.log("Error  ", response);
+                self.cursordefault();
+            },
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader('Authorization', 'Bearer ' + self.model.get('_globalSccessToken'));
+            }
+        });
+
     };
-    
-    this.saveProviderListData = function() {
+
+    this.saveProviderListData = function () {
         var html = "",
             result = self.model.get('configResult');
         self.model.ajaxObjCall({ //NKN
@@ -604,19 +677,19 @@ var AdminView = function(model) {
             crossDomain: true,
             contentType: "application/json"
         }, self.saveProviderListDataCall, self.commonError, void 0, {
-            successVal: {}
-        });
+                successVal: {}
+            });
     };
-    
-    this.entireCatalogSelected = function($element) {
+
+    this.entireCatalogSelected = function ($element) {
         var selectedCourses = [];
-        
-        if(self.model.get('_selectedCatalogs').length>0){
-        	$element.parents('.formTable').find('.course-list .selectCourse option').prop('selected', 'selected');
-  
-        	$element.parents('.formTable').find('.course-list .selectCourse option').each(function() {
-        		selectedCourses.push($(this).attr('data-course-id'));
-        	});
+
+        if (self.model.get('_selectedCatalogs').length > 0) {
+            $element.parents('.formTable').find('.course-list .selectCourse option').prop('selected', 'selected');
+
+            $element.parents('.formTable').find('.course-list .selectCourse option').each(function () {
+                selectedCourses.push($(this).attr('data-course-id'));
+            });
         }
 
         self.model.set('selectedCourses', selectedCourses);
@@ -624,155 +697,152 @@ var AdminView = function(model) {
 
     };
 
-    this.selectiveCourseCatalogSelected = function($element) {
+    this.selectiveCourseCatalogSelected = function ($element) {
         //Reset the selection
-    	var subscourselist=[],domainData;
-    	
+        var subscourselist = [], domainData;
+
         $('.course-list .selectCourse option').prop('selected', false);
         self.bindevent();
-        self.model.set('selectedCourses',[]);
+        self.model.set('selectedCourses', []);
 
-        domainData=self.model.get('_domain');
-        
-        if(domainData != null){
-        	subscourselist = domainData.SelectiveBoxReset == true ? [] : domainData.data.subscribedcourselist;
+        domainData = self.model.get('_domain');
+
+        if (domainData != null) {
+            subscourselist = domainData.SelectiveBoxReset == true ? [] : domainData.data.subscribedcourselist;
         }
-        
-        if(subscourselist.length!=0)
-        self.setSelectiveCourseRetrieved(subscourselist);
+
+        if (subscourselist.length != 0)
+            self.setSelectiveCourseRetrieved(subscourselist);
     };
-    
-    this.setSelectiveCourseRetrieved = function(valueArray) {
+
+    this.setSelectiveCourseRetrieved = function (valueArray) {
         //select the subscribed course
         self.setSelectCourseDropdown(valueArray);
         self.model.set('selectedCourses', valueArray);
         self.bindevent();
     };
-    
-    this.setSelectCourseDropdown = function(valuesArray) {
-    	var selectedCourses=$.unique((self.model.get('selectedCourses')).sort());
-    	selectedCourses=selectedCourses.concat(valuesArray);
-        $.each(selectedCourses, function(index, value) {
+
+    this.setSelectCourseDropdown = function (valuesArray) {
+        var selectedCourses = $.unique((self.model.get('selectedCourses')).sort());
+        selectedCourses = selectedCourses.concat(valuesArray);
+        $.each(selectedCourses, function (index, value) {
             $(".course-list .selectCourse option[data-course-id='" + value + "']").prop('selected', true);
         });
-        self.model.set('selectedCourses',$.unique(selectedCourses.sort()));
+        self.model.set('selectedCourses', $.unique(selectedCourses.sort()));
     };
 
-    this.setCatalogDropdown = function(valuesArray) {
-        $.each(valuesArray, function(index, value) {
+    this.setCatalogDropdown = function (valuesArray) {
+        $.each(valuesArray, function (index, value) {
             $(".catalog-list option[data-domain-id='" + value + "']").prop('selected', true);
         });
     };
-    
-    this.unsetSelectCourseDropdown = function(valuesArray) {
-    	var selectedCourses=$.unique((self.model.get('selectedCourses')).sort());
-        $.each(valuesArray, function(index, value) {
+
+    this.unsetSelectCourseDropdown = function (valuesArray) {
+        var selectedCourses = $.unique((self.model.get('selectedCourses')).sort());
+        $.each(valuesArray, function (index, value) {
             $(".course-list .selectCourse option[data-course-id='" + value + "']").prop('selected', false);
-            selectedCourses = $.grep(selectedCourses, function(selectedCoursesValue) {
-            	  return selectedCoursesValue != value;
-            	});
+            selectedCourses = $.grep(selectedCourses, function (selectedCoursesValue) {
+                return selectedCoursesValue != value;
+            });
         });
-        self.model.set('selectedCourses',selectedCourses);
+        self.model.set('selectedCourses', selectedCourses);
     };
 
-    this.setSelectiveCourseRetrieved = function(valueArray) {
+    this.setSelectiveCourseRetrieved = function (valueArray) {
         //select the subscribed course
         self.setSelectCourseDropdown(valueArray);
         self.model.set('selectedCourses', valueArray);
         self.bindevent();
     };
-    
+
     //This method is used to prepare the catalog vs course 
-    this.cataLogVsCourseForSchool=function(){
-    	var _selectedCatalog=[],_selectedCourse=[];
-    	if(self.model.get('_parentDomain')!=null){
-    		_selectedCatalog=self.model.get('_parentDomain').data.subscribedproviderlist;
-        	_selectedCourse=self.model.get('_parentDomain').data.subscribedcourselist;
-    	}
-    	//catalog vs all course of catalog map
-    	var _districtCatalogAllCourse=self.model.get('_allCoorsesListDistrict'),
-    	catalogVsCourse={};
-    	$.each(_selectedCatalog,function(index,_catalogValue){
-    		var filteredCourse=[];
-    		var catalogAllCourse=_districtCatalogAllCourse[_catalogValue];
-    		$.each(catalogAllCourse,function(key,courseValue){
-    		$.each(_selectedCourse,function(index,_selectedCoursevalue){
-    			if(_selectedCoursevalue==courseValue.id){
-    				filteredCourse.push(courseValue);
-    			}
-    		});
-    		});
-    		catalogVsCourse[_catalogValue]=	$.unique(filteredCourse.sort());
-    	});
-    	self.model.set('catalogVsCourse',catalogVsCourse);
-    };	
-    
-    this.toggleEntireSelectiveRadio=function(_courselength,selector){
-    	var _selectedCatalog=self.model.get('_selectedCatalogs'),
-    	_selectedCatalogLength=0;
-    	
-    	$.each(_selectedCatalog,function(index,catalogValue){
-    		if(!($.isEmptyObject(self.model.get('catalogVsCourse')))){
-    			_selectedCatalogLength=_selectedCatalogLength+((self.model.get('catalogVsCourse'))[catalogValue]).length;
-    		}
-    	});
-    	
-    	if(_courselength==_selectedCatalogLength){
-    		self.setEntireSelectiveradio(selector,true,false);
-    	}
-    	else
-    		{
-    		self.setEntireSelectiveradio(selector,false,true);
-    		}
-    	
+    this.cataLogVsCourseForSchool = function () {
+        var _selectedCatalog = [], _selectedCourse = [];
+        if (self.model.get('_parentDomain') != null) {
+            _selectedCatalog = self.model.get('_parentDomain').data.subscribedproviderlist;
+            _selectedCourse = self.model.get('_parentDomain').data.subscribedcourselist;
+        }
+        //catalog vs all course of catalog map
+        var _districtCatalogAllCourse = self.model.get('_allCoorsesListDistrict'),
+            catalogVsCourse = {};
+        $.each(_selectedCatalog, function (index, _catalogValue) {
+            var filteredCourse = [];
+            var catalogAllCourse = _districtCatalogAllCourse[_catalogValue];
+            $.each(catalogAllCourse, function (key, courseValue) {
+                $.each(_selectedCourse, function (index, _selectedCoursevalue) {
+                    if (_selectedCoursevalue == courseValue.id) {
+                        filteredCourse.push(courseValue);
+                    }
+                });
+            });
+            catalogVsCourse[_catalogValue] = $.unique(filteredCourse.sort());
+        });
+        self.model.set('catalogVsCourse', catalogVsCourse);
     };
 
-    this.toggleDistrictEntireSelectiveRadio=function(selectedCatalogArray,selectedCoursesLength,selector){
-	   var selectedCatalogLength=0,
-	   allCatalogList=self.model.get('_allCoorsesList');
-	   
-	   $.each(selectedCatalogArray,function(index,selectedCatalogValue){
-		  $.each(allCatalogList,function(key,value){
-			 if(key==selectedCatalogValue){
-				 selectedCatalogLength += value.length;
-			 } 
-		  });
-	   });
-	   
-	   if(selectedCoursesLength==selectedCatalogLength){
-		   self.setEntireSelectiveradio(selector,true,false);
-	   }
-	   else
-		   {
-		   self.setEntireSelectiveradio(selector,false,true);
-		   }
-   };	
-   
-   this.setEntireSelectiveradio=function(selector,entireVal,selectiveVal){
-	   selector.find('.entire-catalog').prop('checked', entireVal);
-	   selector.find('.selective-course').prop('checked', selectiveVal);
-   };
-   
-   //This method is specific to edit school Entire/selective radio button selection 
-   this.setEditSchoolEntireSelectiveRadio=function(parentCourselist,Childcourselist,selector){
-	   var uniqueDistrictCourse=$.unique(parentCourselist.sort());
-	   if(uniqueDistrictCourse.length==Childcourselist.length){
-		   self.setEntireSelectiveradio(selector, true, false);
-	   }
-	   else
-		   {
-		   self.setEntireSelectiveradio(selector, false, true);
-		   }
-   };
-    
-    this.courseSelectedAction = function($element) {
+    this.toggleEntireSelectiveRadio = function (_courselength, selector) {
+        var _selectedCatalog = self.model.get('_selectedCatalogs'),
+            _selectedCatalogLength = 0;
+
+        $.each(_selectedCatalog, function (index, catalogValue) {
+            if (!($.isEmptyObject(self.model.get('catalogVsCourse')))) {
+                _selectedCatalogLength = _selectedCatalogLength + ((self.model.get('catalogVsCourse'))[catalogValue]).length;
+            }
+        });
+
+        if (_courselength == _selectedCatalogLength) {
+            self.setEntireSelectiveradio(selector, true, false);
+        }
+        else {
+            self.setEntireSelectiveradio(selector, false, true);
+        }
+
+    };
+
+    this.toggleDistrictEntireSelectiveRadio = function (selectedCatalogArray, selectedCoursesLength, selector) {
+        var selectedCatalogLength = 0,
+            allCatalogList = self.model.get('_allCoorsesList');
+
+        $.each(selectedCatalogArray, function (index, selectedCatalogValue) {
+            $.each(allCatalogList, function (key, value) {
+                if (key == selectedCatalogValue) {
+                    selectedCatalogLength += value.length;
+                }
+            });
+        });
+
+        if (selectedCoursesLength == selectedCatalogLength) {
+            self.setEntireSelectiveradio(selector, true, false);
+        }
+        else {
+            self.setEntireSelectiveradio(selector, false, true);
+        }
+    };
+
+    this.setEntireSelectiveradio = function (selector, entireVal, selectiveVal) {
+        selector.find('.entire-catalog').prop('checked', entireVal);
+        selector.find('.selective-course').prop('checked', selectiveVal);
+    };
+
+    //This method is specific to edit school Entire/selective radio button selection 
+    this.setEditSchoolEntireSelectiveRadio = function (parentCourselist, Childcourselist, selector) {
+        var uniqueDistrictCourse = $.unique(parentCourselist.sort());
+        if (uniqueDistrictCourse.length == Childcourselist.length) {
+            self.setEntireSelectiveradio(selector, true, false);
+        }
+        else {
+            self.setEntireSelectiveradio(selector, false, true);
+        }
+    };
+
+    this.courseSelectedAction = function ($element) {
         var selectedCourses = self.model.get('selectedCourses'),
             totalElements = $element.parents('select').find('option').length,
             selectedElements = $element.parents('select').find(':selected').length,
             dataCourseId = $element.attr('data-course-id'),
-            selectedCatalog=self.model.get('_selectedCatalogs');
+            selectedCatalog = self.model.get('_selectedCatalogs');
         self.cataLogVsCourseForSchool();
-   
+
         if (selectedCourses.indexOf(dataCourseId) === -1) {
             selectedCourses.push(dataCourseId);
         }
@@ -780,58 +850,58 @@ var AdminView = function(model) {
         $element.addClass('newEle');
         self.model.set('selectedCourses', selectedCourses);
 
-        if(self.model.get('isSchoolPopup'))
-        self.toggleEntireSelectiveRadio(selectedElements,$element.parents('.formTable'));
+        if (self.model.get('isSchoolPopup'))
+            self.toggleEntireSelectiveRadio(selectedElements, $element.parents('.formTable'));
         else
-        self.toggleDistrictEntireSelectiveRadio(selectedCatalog,selectedElements,$element.parents('.formTable'));	
+            self.toggleDistrictEntireSelectiveRadio(selectedCatalog, selectedElements, $element.parents('.formTable'));
     };
-    
-    this.courseUnSelectedAction = function($element) {
-        var selectedCourses = self.model.get('selectedCourses'),selectedElements = $element.parents('select').find(':selected').length,
-            dataCourseId = $element.attr('data-course-id'),selectedCatalog=self.model.get('_selectedCatalogs');
-        
+
+    this.courseUnSelectedAction = function ($element) {
+        var selectedCourses = self.model.get('selectedCourses'), selectedElements = $element.parents('select').find(':selected').length,
+            dataCourseId = $element.attr('data-course-id'), selectedCatalog = self.model.get('_selectedCatalogs');
+
         self.cataLogVsCourseForSchool();
 
         while (selectedCourses.indexOf(dataCourseId) > -1) {
             selectedCourses.splice(selectedCourses.indexOf(dataCourseId), 1);
         }
-        
+
         self.model.set('selectedCourses', selectedCourses);
-        if(self.model.get('isSchoolPopup'))
-        self.toggleEntireSelectiveRadio(selectedElements,$element.parents('.formTable'));
+        if (self.model.get('isSchoolPopup'))
+            self.toggleEntireSelectiveRadio(selectedElements, $element.parents('.formTable'));
         else
-        self.toggleDistrictEntireSelectiveRadio(selectedCatalog,selectedElements,$element.parents('.formTable'));	
+            self.toggleDistrictEntireSelectiveRadio(selectedCatalog, selectedElements, $element.parents('.formTable'));
     };
-    
-    this.prepareSchoolCourseDropDown=function(selectedCatalogs){
-    	var _selectedCatalogCourse=[],courseSelectListHTML="";
-    		$.each(selectedCatalogs,function(index,catalogValue){
-    				_selectedCatalogCourse.push(self.model.get('catalogVsCourse')[catalogValue]);
-    		});
-    	
-    	 $.each(_selectedCatalogCourse, function(index, ListOfcourse) {
-    		 $.each(ListOfcourse,function(key,course){
-                     courseSelectListHTML += '<option type="checkbox" data-course-id="' + course.id + '" data-course-name="' + course.title + '" data-domain-id="' + course.domainid + '" >' + course.title + '</option>';
-    		 });
-         });
-    	 $(".corseselectList select").html(courseSelectListHTML);
-    	 self.setSelectCourseDropdown(self.model.get('selectedCourses'));
+
+    this.prepareSchoolCourseDropDown = function (selectedCatalogs) {
+        var _selectedCatalogCourse = [], courseSelectListHTML = "";
+        $.each(selectedCatalogs, function (index, catalogValue) {
+            _selectedCatalogCourse.push(self.model.get('catalogVsCourse')[catalogValue]);
+        });
+
+        $.each(_selectedCatalogCourse, function (index, ListOfcourse) {
+            $.each(ListOfcourse, function (key, course) {
+                courseSelectListHTML += '<option type="checkbox" data-course-id="' + course.id + '" data-course-name="' + course.title + '" data-domain-id="' + course.domainid + '" >' + course.title + '</option>';
+            });
+        });
+        $(".corseselectList select").html(courseSelectListHTML);
+        self.setSelectCourseDropdown(self.model.get('selectedCourses'));
     };
-    
-    this.editSchool = function(fromselector, data_id, stateSelctedVal) {
+
+    this.editSchool = function (fromselector, data_id, stateSelctedVal) {
         var editScholPrntId = '';
         self.model.ajaxObjCall({ //1060
             type: "GET",
             url: self.model.get('_config').getDomainData + '/' + data_id
         }, self.editSchoolData, self.commonError, void 0, {
-            successVal: {
-                stateSelctedVal: stateSelctedVal,
-                fromselector: fromselector
-            }
-        });
+                successVal: {
+                    stateSelctedVal: stateSelctedVal,
+                    fromselector: fromselector
+                }
+            });
     };
 
-    this.saveSchool = function(formElementSelector, data) {
+    this.saveSchool = function (formElementSelector, data) {
         var urlChecker = '',
             someDate,
             numberOfDaysToAdd,
@@ -927,11 +997,11 @@ var AdminView = function(model) {
             dataType: "json",
             data: JSON.stringify(createdDomainObj)
         }, self.saveSchoolData, self.commonError, void 0, {
-            successVal: {}
-        });
+                successVal: {}
+            });
     };
 
-    this.createDataFormat = function(dateValue) {
+    this.createDataFormat = function (dateValue) {
         var dateSplice,
             Month,
             Datee;
@@ -953,20 +1023,20 @@ var AdminView = function(model) {
         return dateValue
     };
 
-    this.radioButton = function(dataClass) {
+    this.radioButton = function (dataClass) {
         $('.' + dataClass).find('.selective-course').prop("checked", true);
         $('.' + dataClass).find('.entire-catalog').prop("checked", false);
     };
 
-    this.loginoutevent = function() {
+    this.loginoutevent = function () {
         var result = self.model.get('configResult');
-        $('.LogOuticon').off('click').on('click', function() {
+        $('.LogOuticon').off('click').on('click', function () {
             self.loginoutIconClick(result)
         });
     };
 
 
-    this.loginoutIconClick = function(result) {
+    this.loginoutIconClick = function (result) {
         self.model.set('_baseUrl', result.Logouturl);
         self.model.ajaxObjCall({ //1182
             type: "GET",
@@ -974,20 +1044,20 @@ var AdminView = function(model) {
             crossDomain: true,
             contentType: "application/json",
         }, self.logout, self.commonError, void 0, {
-            successVal: {}
-        });
+                successVal: {}
+            });
     };
 
 
 
-    this.sortingDistrict = function() {
+    this.sortingDistrict = function () {
         //create global variable and give it start value 1
         var sortBy = "",
             parent = $('.domainContainer > ul'),
             keySelector = ".disTrictList",
             childSelector = $('.domainContainer > ul > li'),
             asc = true;
-        var items = parent.children(childSelector).sort(function(a, b) {
+        var items = parent.children(childSelector).sort(function (a, b) {
             var vA = $.trim($(keySelector, a).text());
             var vB = $.trim($(keySelector, b).text());
             return ((vA < vB) ? -1 : (vA > vB) ? 1 : 0) * (asc ? 1 : -1);
@@ -996,7 +1066,7 @@ var AdminView = function(model) {
 
     };
 
-    this.loadingdistrict = function() {
+    this.loadingdistrict = function () {
         $('.districtTabBox').remove();
         var html = "",
             result = self.model.get('configResult'),
@@ -1013,23 +1083,23 @@ var AdminView = function(model) {
             crossDomain: true,
             contentType: "application/json",
         }, self.districtOptionLoading, self.commonError, void 0, {
-            successVal: {
-                html: html,
-                split_data: split_data,
-                state_list: state_list,
-                urlStore: urlStore
-            }
-        });
+                successVal: {
+                    html: html,
+                    split_data: split_data,
+                    state_list: state_list,
+                    urlStore: urlStore
+                }
+            });
         self.model.ajaxObjCall({ //NKN
             type: "GET",
             url: result.New_District_Popup_Provider,
             crossDomain: true,
             contentType: "application/json"
         }, self.saveProviderListDataCall, self.commonError, void 0, {
-            successVal: {}
-        });
+                successVal: {}
+            });
     };
-    this.saveProviderListDataCall = function(res) {
+    this.saveProviderListDataCall = function (res) {
         var allCatalogs = [],
             loopVar, catalogId;
         if (res && res.data) {
@@ -1043,21 +1113,21 @@ var AdminView = function(model) {
         }
     };
 
-    this.getCatalogCourse = function(catalogId, res) {
+    this.getCatalogCourse = function (catalogId, res) {
         self.cursorwait();
         var courseListURI = self.model.get('_config').courseList + "/" + catalogId;
         // $('#example' + $(this).attr('data-domain-id')).attr('checked', true);
         self.model.ajaxObjCall({ //1567
             url: courseListURI
         }, self.courseListDataToModel, self.commonError, void 0, {
-            successVal: {
-                res: res,
-                elementId: catalogId
-            }
-        });
+                successVal: {
+                    res: res,
+                    elementId: catalogId
+                }
+            });
     };
 
-    this.courseListDataToModel = function(rest, parametersObj) {
+    this.courseListDataToModel = function (rest, parametersObj) {
         var _allCoorsesList = self.model.get('_allCoorsesList'),
             elementId = parametersObj.elementId,
             courses;
@@ -1069,8 +1139,8 @@ var AdminView = function(model) {
         self.model.set('_allCoorsesList', _allCoorsesList);
         self.cursordefault();
     };
-    this.statelistchange = function() {
-        $('.statename').off('change').on('change', function(e) {
+    this.statelistchange = function () {
+        $('.statename').off('change').on('change', function (e) {
             if ($(this).val() === 'Select State') {
                 return;
             }
@@ -1096,12 +1166,12 @@ var AdminView = function(model) {
                 crossDomain: true,
                 contentType: "application/json"
             }, self.districtOptionLoadingData, self.commonError, self.nextDomainCallComplete, {
-                successVal: {}
-            });
+                    successVal: {}
+                });
         });
     };
 
-    this.cursorwait = function() {
+    this.cursorwait = function () {
         $('body').css('cursor', 'wait');
         $('.grayBg,.snwLoader').show();
         $('.grayBg,.popGrayBg').css({
@@ -1109,13 +1179,13 @@ var AdminView = function(model) {
         });
     };
 
-    this.cursordefault = function() {
+    this.cursordefault = function () {
         $('body').css('cursor', 'default');
         $('.grayBg,.snwLoader').hide();
         // $('td').trigger('hover');
     };
 
-    this.getProviderList = function() {
+    this.getProviderList = function () {
         var html = '',
             result = self.model.get('configResult');
         self.model.ajaxObjCall({ //NKN
@@ -1124,18 +1194,18 @@ var AdminView = function(model) {
             crossDomain: true,
             contentType: "application/json"
         }, self.getProviderListDataCall, self.commonError, void 0, {
-            successVal: {}
-        });
+                successVal: {}
+            });
     };
 
-    this.getConfig = function() {
+    this.getConfig = function () {
         $.when($.ajax("config.json"))
-            .then(function(data, txtStatus, jqXHR) {
+            .then(function (data, txtStatus, jqXHR) {
                 self.model.set('_config', data);
             });
     };
 
-    this.courseCatalogsSelected = function($element) {
+    this.courseCatalogsSelected = function ($element) {
         var localLength,
             lclLngthEdit,
             _customCatalogId = self.model.get('_customCatalogId'),
@@ -1148,7 +1218,7 @@ var AdminView = function(model) {
             _selectedCatalogs = self.model.get('_selectedCatalogs')
             ;
         $element.addClass('newEle');
-       
+
         if (_selectedCatalogs.length > 0 && !($(".entire-catalog:visible").is(":checked"))) {
             if (!selectiveCourses) {
                 selectiveCourses = [];
@@ -1176,44 +1246,44 @@ var AdminView = function(model) {
             $('.inputTracker input').prop("checked", false);
             $('.inputTrackerEdit input').prop("checked", false);
         }
-        if(self.model.get('isSchoolPopup') === false){
-        	self.updateCourseList();
+        if (self.model.get('isSchoolPopup') === false) {
+            self.updateCourseList();
         }
-        else{
-        self.prepareSchoolCourseDropDown(_selectedCatalogs);	
-        if($(".entire-catalog:visible").is(":checked")){
-        	_allCourseListDistrict=self.model.get('_allCoorsesListDistrict');
-        	_deselectedCatalogAllCourse=_allCourseListDistrict[data_domain_id].map(function(value){return value.id});
-        	self.setSelectCourseDropdown(_deselectedCatalogAllCourse);
-        	self.bindevent();
+        else {
+            self.prepareSchoolCourseDropDown(_selectedCatalogs);
+            if ($(".entire-catalog:visible").is(":checked")) {
+                _allCourseListDistrict = self.model.get('_allCoorsesListDistrict');
+                _deselectedCatalogAllCourse = _allCourseListDistrict[data_domain_id].map(function (value) { return value.id });
+                self.setSelectCourseDropdown(_deselectedCatalogAllCourse);
+                self.bindevent();
+            }
         }
-        }
-        
-    };
-    
-    //This method is for updating/selecting the course textarea when a catalog is unselected 
-    this.updateCourseListForSchool=function(catalogId){
-    	_allCourseListDistrict=self.model.get('_allCoorsesListDistrict');
-    	_deselectedCatalogAllCourse=_allCourseListDistrict[catalogId].map(function(value){return value.id});
-    	if(self.model.get('_domain')!=null)
-    	_domainSelectedCourse= self.model.get('_domain').data.subscribedcourselist;
-    	_deselectedCatalogCourse=[];
-    	
-    	$.each(_domainSelectedCourse,function(index,domainSelectedCourse){
-    		$.each(_deselectedCatalogAllCourse,function(index,deselectedCatalogAllCourse){
-    			if(domainSelectedCourse!=deselectedCatalogAllCourse){
-    				_deselectedCatalogCourse.push(domainSelectedCourse);
-    			}
-    		});
-    	});
-    	
-    	self.unsetSelectCourseDropdown(_deselectedCatalogCourse);
-    	self.bindevent();
-    };
-    
-   
 
-   this.courseCatalogsUnSelected = function($element) {
+    };
+
+    //This method is for updating/selecting the course textarea when a catalog is unselected 
+    this.updateCourseListForSchool = function (catalogId) {
+        _allCourseListDistrict = self.model.get('_allCoorsesListDistrict');
+        _deselectedCatalogAllCourse = _allCourseListDistrict[catalogId].map(function (value) { return value.id });
+        if (self.model.get('_domain') != null)
+            _domainSelectedCourse = self.model.get('_domain').data.subscribedcourselist;
+        _deselectedCatalogCourse = [];
+
+        $.each(_domainSelectedCourse, function (index, domainSelectedCourse) {
+            $.each(_deselectedCatalogAllCourse, function (index, deselectedCatalogAllCourse) {
+                if (domainSelectedCourse != deselectedCatalogAllCourse) {
+                    _deselectedCatalogCourse.push(domainSelectedCourse);
+                }
+            });
+        });
+
+        self.unsetSelectCourseDropdown(_deselectedCatalogCourse);
+        self.bindevent();
+    };
+
+
+
+    this.courseCatalogsUnSelected = function ($element) {
         var localLength,
             lclLngthEdit,
             indexArray, data_domain_id,
@@ -1222,7 +1292,7 @@ var AdminView = function(model) {
             selectiveCourses = self.model.get('selectiveCourses'),
             _selectedCatalogs = self.model.get('_selectedCatalogs');
 
-            if (_selectedCatalogs.length > 0 && !($(".entire-catalog:visible").is(":checked"))) {
+        if (_selectedCatalogs.length > 0 && !($(".entire-catalog:visible").is(":checked"))) {
             if (!selectiveCourses) {
                 selectiveCourses = [];
             }
@@ -1252,23 +1322,23 @@ var AdminView = function(model) {
             }
         }
         $('#demo' + data_domain_id).removeAttr('checked');
-        if(self.model.get('isSchoolPopup') === false)
-        self.updateCourseList();
-        else{
-			self.prepareSchoolCourseDropDown(_selectedCatalogs);
-			self.bindevent();
-        	//if($(".entire-catalog:visible").is(":checked")){
-            	_allCourseListDistrict=self.model.get('_allCoorsesListDistrict');
-            	_deselectedCatalogAllCourse=_allCourseListDistrict[data_domain_id].map(function(value){return value.id});
-            	self.unsetSelectCourseDropdown(_deselectedCatalogAllCourse);
-            	self.bindevent();
-            	self.setSelectCourseDropdown(self.model.get('selectedCourses'));
-            	self.bindevent();
-        	//self.updateCourseListForSchool(data_domain_id);
-        	self.toggleEntireSelectiveRadio($element.parents('.formTable').find('.course-list').find('.select2-selection__choice').length,$element.parents('.formTable'));
+        if (self.model.get('isSchoolPopup') === false)
+            self.updateCourseList();
+        else {
+            self.prepareSchoolCourseDropDown(_selectedCatalogs);
+            self.bindevent();
+            //if($(".entire-catalog:visible").is(":checked")){
+            _allCourseListDistrict = self.model.get('_allCoorsesListDistrict');
+            _deselectedCatalogAllCourse = _allCourseListDistrict[data_domain_id].map(function (value) { return value.id });
+            self.unsetSelectCourseDropdown(_deselectedCatalogAllCourse);
+            self.bindevent();
+            self.setSelectCourseDropdown(self.model.get('selectedCourses'));
+            self.bindevent();
+            //self.updateCourseListForSchool(data_domain_id);
+            self.toggleEntireSelectiveRadio($element.parents('.formTable').find('.course-list').find('.select2-selection__choice').length, $element.parents('.formTable'));
         }
     };
-    this.updateCourseList = function() {
+    this.updateCourseList = function () {
         var selectedCourseCatalog = $('.catalog-list:visible').find('input[type="checkbox"]').filter(":checked"),
             totalCourses = [],
             courseListURI,
@@ -1294,15 +1364,15 @@ var AdminView = function(model) {
                     self.model.ajaxObjCall({ //1447
                         url: courseListURI
                     }, self.updateCourseData, self.commonError, void 0, {
-                        successVal: {
-                            selectedCourseCatalog: selectedCourseCatalog,
-                            ind: loopVar,
-                            addHTML: addHTML,
-                            courseSelectListHTML: courseSelectListHTML,
-                            _selectedCatalogsLength: _selectedCatalogsLength,
-                            _selectedCatalogs: _selectedCatalogs
-                        }
-                    });
+                            successVal: {
+                                selectedCourseCatalog: selectedCourseCatalog,
+                                ind: loopVar,
+                                addHTML: addHTML,
+                                courseSelectListHTML: courseSelectListHTML,
+                                _selectedCatalogsLength: _selectedCatalogsLength,
+                                _selectedCatalogs: _selectedCatalogs
+                            }
+                        });
                 }
             }
         } else {
@@ -1312,7 +1382,7 @@ var AdminView = function(model) {
         self.bindevent();
     };
 
-    this.domainWelcomeLetter = function() {
+    this.domainWelcomeLetter = function () {
         var name,
             welcomeLetterURI,
             form;
@@ -1321,23 +1391,23 @@ var AdminView = function(model) {
         form = $('<form></form>').attr('action', welcomeLetterURI).attr('method', 'get');
         form.appendTo('body').submit().remove();
     };
-    
-    this.schoolWelcomeLetter = function() {
-    	var name, 
-    	    welcomeLetterURI,
+
+    this.schoolWelcomeLetter = function () {
+        var name,
+            welcomeLetterURI,
             form;
-    	name = self.model.get('_sessionData').firstname + " " + self.model.get('_sessionData').lastname;
-    	welcomeLetterURI = self.model.get('_config').schoolWelcomeLetter + '/' + $('.editschoolwelcome').data("domain-id") + '/' + name;
+        name = self.model.get('_sessionData').firstname + " " + self.model.get('_sessionData').lastname;
+        welcomeLetterURI = self.model.get('_config').schoolWelcomeLetter + '/' + $('.editschoolwelcome').data("domain-id") + '/' + name;
         form = $('<form></form>').attr('action', welcomeLetterURI).attr('method', 'get');
         form.appendTo('body').submit().remove();
     };
 
-    this.domainFormValidation = function(formElementSelector, requestType) {
+    this.domainFormValidation = function (formElementSelector, requestType) {
         formElementSelector = $(formElementSelector);
         self.domainFormSubmit(formElementSelector, requestType);
     };
 
-    this.domainFormSubmit = function(formElementSelector, requestType) {
+    this.domainFormSubmit = function (formElementSelector, requestType) {
         var catalogListArr,
             Month,
             Datee,
@@ -1413,11 +1483,11 @@ var AdminView = function(model) {
                 "token": self.model.get('_sessionData').token
             }
         }, self.submitDomainFromData, self.domainFromError, void 0, {
-            successVal: {}
-        });
+                successVal: {}
+            });
     };
 
-    this.domainEditForm = function(formElementSelector) {
+    this.domainEditForm = function (formElementSelector) {
         self.cursorwait();
         self.updateCourseList();
         formElementSelector = $(formElementSelector);
@@ -1425,32 +1495,32 @@ var AdminView = function(model) {
         self.model.ajaxObjCall({ //1567
             url: self.model.get('_config').getDomainData + '/' + formElementSelector.attr("data-domain-id"),
         }, self.editDomainFromData, self.editDomainFromError, void 0, {
-            successVal: {
-                formElementSelector: formElementSelector
-            },
-            errorVal: {
-                formElementSelector: formElementSelector
-            }
-        });
+                successVal: {
+                    formElementSelector: formElementSelector
+                },
+                errorVal: {
+                    formElementSelector: formElementSelector
+                }
+            });
     };
 
-    this.editnewfunction = function() {
+    this.editnewfunction = function () {
         $('.editpopupBox').find(".course-list selected").empty();
         var courseSelectListHTML = '';
-        $.each(self.model.get('_totalCourseArry'), function(courseIdx, course) {
+        $.each(self.model.get('_totalCourseArry'), function (courseIdx, course) {
             courseSelectListHTML += '<option type="checkbox" data-course-id="' + course.id + '" data-course-name="' + course.title + '" data-domain-id="' + course.domainid + '" >' + course.title + '</option>'
         });
         $('.editpopupBox').find(".course-list select").html(courseSelectListHTML);
 
-        $('.editpopupBox').find(".course-list select option").each(function() {
+        $('.editpopupBox').find(".course-list select option").each(function () {
             self.courseListEach($(this));
         });
     };
 
-    this.courseListEach = function($element) {
+    this.courseListEach = function ($element) {
         var courseListElId = $element.attr('data-course-id');
         var courseFound = false;
-        $.each(self.model.get('_result').data.subscribedcourselist, function(subidx, subCourseId) {
+        $.each(self.model.get('_result').data.subscribedcourselist, function (subidx, subCourseId) {
             if (courseFound === false) {
                 courseFound = self.eachsubscribedcourse(subidx, subCourseId, courseListElId, courseFound);
             }
@@ -1463,7 +1533,7 @@ var AdminView = function(model) {
         }
     };
 
-    this.eachsubscribedcourse = function(subidx, subCourseId, courseListElId, courseFound) {
+    this.eachsubscribedcourse = function (subidx, subCourseId, courseListElId, courseFound) {
         if (courseListElId === subCourseId) {
             return true;
         } else {
@@ -1471,7 +1541,7 @@ var AdminView = function(model) {
         }
     };
 
-    this.addSchool = function(data_param, eqNo) {
+    this.addSchool = function (data_param, eqNo) {
         var localArray = [];
         self.model.ajaxObjCall({ //1656
             type: "GET",
@@ -1479,27 +1549,27 @@ var AdminView = function(model) {
             crossDomain: true,
             contentType: "application/json"
         }, self.addSchoolData, self.commonError, void 0, {
-            successVal: {
-                eqNo: eqNo
-            }
-        });
+                successVal: {
+                    eqNo: eqNo
+                }
+            });
 
     };
 
-    this.schoolPopupData = function(dataParam) {
+    this.schoolPopupData = function (dataParam) {
         self.model.ajaxObjCall({ //1697
             type: "GET",
             url: self.model.get('_config').getDomainData + '/' + dataParam,
             crossDomain: true,
             contentType: "application/json"
         }, self.schoolPopupDataCall, self.commonError, void 0, {
-            successVal: {
-                dataParam: dataParam
-            }
-        });
+                successVal: {
+                    dataParam: dataParam
+                }
+            });
     };
 
-    this.numberValidation = function(context) {
+    this.numberValidation = function (context) {
         var localData,
             localstrin,
             str,
@@ -1533,7 +1603,7 @@ var AdminView = function(model) {
 
     };
 
-    this.getCurrentDate = function() {
+    this.getCurrentDate = function () {
         var d,
             month,
             day,
@@ -1546,7 +1616,7 @@ var AdminView = function(model) {
     };
 
     //new methods sushant  312
-    this.districtTabBoxData = function(res, parametersObj) {
+    this.districtTabBoxData = function (res, parametersObj) {
         var thisContext,
             attrId,
             someDate,
@@ -1575,7 +1645,7 @@ var AdminView = function(model) {
             if (subscribedproviderlist && subscribedproviderlist.indexOf(allCatalogsListDistrict[loopVar].id) > -1) {
                 currentCatalog = allCatalogsListDistrict[loopVar].id;
                 tempArrCatalogs.push(allCatalogsListDistrict[loopVar]);
-                if (currentCatalog == self.model.get('_customCatalogId')) {} else {
+                if (currentCatalog == self.model.get('_customCatalogId')) { } else {
                     if (_allCoorsesListDistrict[currentCatalog]) {
                         for (loopVar2 = 0; loopVar2 < _allCoorsesListDistrict[currentCatalog].length; loopVar2++) {
                             if (!tempArrCourse[currentCatalog]) {
@@ -1637,11 +1707,11 @@ var AdminView = function(model) {
                 crossDomain: true,
                 contentType: "application/json"
             }, self.schoolListData, self.commonError, void 0, {
-                successVal: {
-                    thisContext: thisContext,
-                    html: html
-                }
-            });
+                    successVal: {
+                        thisContext: thisContext,
+                        html: html
+                    }
+                });
 
         } else if (data.messageType === "ERROR") {
             $('.norecords,.districtHeadDetails').remove();
@@ -1657,7 +1727,7 @@ var AdminView = function(model) {
         }
     };
 
-    this.schoolListData = function(data, parametersObj) {
+    this.schoolListData = function (data, parametersObj) {
         var thisContext,
             html,
             i;
@@ -1684,9 +1754,9 @@ var AdminView = function(model) {
         }
         if (thisContext.parents('.districtTabBoxHead').next().is(':visible')) {
             // self.saveProviderListData();
-            $('.districtHeadDetails').slideUp('slow', function() {
+            $('.districtHeadDetails').slideUp('slow', function () {
 
-                setTimeout(function() {
+                setTimeout(function () {
                     $('.districtHeadDetails').remove();
                 }, 350);
             });
@@ -1698,7 +1768,7 @@ var AdminView = function(model) {
     };
 
     //399
-    this.displayEntry = function(res, parametersObj) {
+    this.displayEntry = function (res, parametersObj) {
         var html = parametersObj.html,
             i;
         if (res.messageType === "SUCCESS") {
@@ -1736,7 +1806,7 @@ var AdminView = function(model) {
     };
 
     //459   //514
-    this.displayNextSchoolEntry = function(res, parametersObj) {
+    this.displayNextSchoolEntry = function (res, parametersObj) {
         var html = parametersObj.html,
             _previousCount = self.model.get('_previousCount'),
             _rowView = self.model.get('_rowView'),
@@ -1771,7 +1841,7 @@ var AdminView = function(model) {
     };
 
     //572    //630
-    this.displayNextDomain = function(data, parametersObj) {
+    this.displayNextDomain = function (data, parametersObj) {
         var html = parametersObj.html,
             lowerLimit, upperLimit,
             i;
@@ -1801,14 +1871,14 @@ var AdminView = function(model) {
         }
     };
 
-    this.nextDomainCallComplete = function() {
-        setTimeout(function() {
+    this.nextDomainCallComplete = function () {
+        setTimeout(function () {
             self.bindevent();
         }, 400)
     };
 
     //685
-    this.domainShowEntry = function(data, parametersObj) {
+    this.domainShowEntry = function (data, parametersObj) {
         var html = parametersObj.html,
             i,
             length,
@@ -1840,7 +1910,7 @@ var AdminView = function(model) {
             $('.FootPagination').hide();
         }
     };
-    this.setStateNameMap = function(parentid) {
+    this.setStateNameMap = function (parentid) {
         var result = self.model.get('configResult');
         self.model.ajaxObjCall({ //809
             type: "GET",
@@ -1849,20 +1919,20 @@ var AdminView = function(model) {
             crossDomain: true,
             contentType: "application/json"
         }, self.setStateNameMapSuccess, self.commonError, void 0, {
-            successVal: {
-                parentid: parentid
-            }
-        });
+                successVal: {
+                    parentid: parentid
+                }
+            });
     };
 
-    this.setStateNameMapSuccess = function(res, parametersObj) {
+    this.setStateNameMapSuccess = function (res, parametersObj) {
         var _stateNameMap = self.model.get('_stateNameMap'),
             parentid = parametersObj.parentid,
             parentidStr = parentid.toString();
         _stateNameMap[parentidStr] = res.data.domain.name;
     };
     ////809
-    this.searchDataDisplay = function(res, parametersObj) {
+    this.searchDataDisplay = function (res, parametersObj) {
         var html = parametersObj.html,
             schoolId, length,
             i;
@@ -1905,13 +1975,13 @@ var AdminView = function(model) {
     };
 
     ////1060
-    this.editSchoolData = function(rslt, parametersObj) {
+    this.editSchoolData = function (rslt, parametersObj) {
         var stateSelctedVal = parametersObj.stateSelctedVal,
             editScholPrntId,
             fromselector = parametersObj.fromselector;
         $('.editschlpopupBox,.popGrayBg').show();
         if (rslt.messageType === "SUCCESS") {
-            self.resetDomainVar(rslt,'_domain');
+            self.resetDomainVar(rslt, '_domain');
             editScholPrntId = rslt.data.domain.parentid;
             fromselector.find('.schldomainname').val(rslt.data.domain.name);
             fromselector.find('.loginprefix').val(rslt.data.domain.userspace);
@@ -1926,37 +1996,36 @@ var AdminView = function(model) {
                 $('#snw_License1').attr('disabled', "disabled");
             }
             //Not required as per scenraio -1
-//            if (rslt.data.customization.edivatelearn.pilot) {
-//                fromselector.find('.pilot-domain').prop('checked', true);
-//            } else {
-//                fromselector.find('.pilot-domain').prop('checked', false);
-//            }
-            if(rslt.data.customization.edivatelearn.fullsubscription){
-            	self.setEntireSelectiveradio(fromselector, true, false);
-               }
-               else
-               	{
+            //            if (rslt.data.customization.edivatelearn.pilot) {
+            //                fromselector.find('.pilot-domain').prop('checked', true);
+            //            } else {
+            //                fromselector.find('.pilot-domain').prop('checked', false);
+            //            }
+            if (rslt.data.customization.edivatelearn.fullsubscription) {
+                self.setEntireSelectiveradio(fromselector, true, false);
+            }
+            else {
                	self.setEntireSelectiveradio(fromselector, false, true);
-          		 }
-            
+            }
+
             self.populateCatalogsCourses(rslt, 'edit');
             self.model.ajaxObjCall({
                 type: "GET",
                 url: self.model.get('_config').DistrictList + '/' + stateSelctedVal,
             }, self.editSchoolDistrictData, self.commonError, void 0, {
-                successVal: {
-                    stateSelctedVal: stateSelctedVal,
-                    fromselector: fromselector,
-                    rslt: rslt,
-                    editScholPrntId: editScholPrntId
-                }
-            });
+                    successVal: {
+                        stateSelctedVal: stateSelctedVal,
+                        fromselector: fromselector,
+                        rslt: rslt,
+                        editScholPrntId: editScholPrntId
+                    }
+                });
         } else {
             self.cursordefault();
         }
     };
 
-    this.editSchoolDistrictData = function(rslte, parametersObj) {
+    this.editSchoolDistrictData = function (rslte, parametersObj) {
         var fromselector = parametersObj.fromselector,
             rslt = parametersObj.rslt,
             html,
@@ -1965,12 +2034,12 @@ var AdminView = function(model) {
 
         if (rslt.messageType === "SUCCESS") {
             html = '';
-            fromselector.find('.schooldistrictlist').html(function() {
+            fromselector.find('.schooldistrictlist').html(function () {
                 for (i = 0; i < rslte.data.domains.length; i++) {
                     html += '<option value="' + rslte.data.domains[i].id + '">' + rslte.data.domains[i].name + '</option>';
                 }
                 return html;
-            }).promise().done(function() {
+            }).promise().done(function () {
                 fromselector.find('.schooldistrictlist').val(editScholPrntId);
             });
             self.cursordefault();
@@ -1979,7 +2048,7 @@ var AdminView = function(model) {
     };
 
     ////1142
-    this.saveSchoolData = function(rslt, parametersObj) {
+    this.saveSchoolData = function (rslt, parametersObj) {
         var stateSelctedVal = parametersObj.stateSelctedVal,
             fromselector = parametersObj.fromselector;
         if (rslt.messageType === "SUCCESS") {
@@ -2005,13 +2074,13 @@ var AdminView = function(model) {
     };
 
     ////1182
-    this.logout = function(rslt, parametersObj) {
+    this.logout = function (rslt, parametersObj) {
         window.location.href = "index.html";
         sessionStorage.clear();
     };
 
     //1227
-    this.districtOptionLoading = function(res, parametersObj) {
+    this.districtOptionLoading = function (res, parametersObj) {
         var split_data = parametersObj.split_data,
             html = parametersObj.html,
             state_list = parametersObj.state_list,
@@ -2020,8 +2089,8 @@ var AdminView = function(model) {
         state_list = '<option class="selectState">Select State</option>';
         if (res.messageType === "SUCCESS") {
             $('.dummydata').html();
-            $('.statename').html(function() {
-                $.each(res.data.domains, function(i, v) {
+            $('.statename').html(function () {
+                $.each(res.data.domains, function (i, v) {
                     split_data = v.userspace.split('-');
                     state_list += '<option value=' + v.id + ' class="' + v.name + '">' + split_data[1].toUpperCase() + ' ' + v.name + '</option>';
 
@@ -2043,11 +2112,11 @@ var AdminView = function(model) {
                 crossDomain: true,
                 contentType: "application/json"
             }, self.districtDataLoading, self.commonError, void 0, {
-                successVal: {
-                    html: html
+                    successVal: {
+                        html: html
 
-                }
-            })
+                    }
+                })
             self.statelistchange();
         } else {
             self.cursordefault();
@@ -2056,7 +2125,7 @@ var AdminView = function(model) {
         }
     };
 
-    this.districtDataLoading = function(data, parametersObj) {
+    this.districtDataLoading = function (data, parametersObj) {
         var html = parametersObj.html,
             schoolId,
             i,
@@ -2097,7 +2166,7 @@ var AdminView = function(model) {
     };
 
     ////1317
-    this.districtOptionLoadingData = function(data, parametersObj) {
+    this.districtOptionLoadingData = function (data, parametersObj) {
         var split_data = parametersObj.split_data,
             i,
             html,
@@ -2142,7 +2211,7 @@ var AdminView = function(model) {
     };
 
     ////1447
-    this.updateCourseData = function(res, parametersObj) {
+    this.updateCourseData = function (res, parametersObj) {
         var selectedCourseCatalog = parametersObj.selectedCourseCatalog,
             state_list = parametersObj.state_list,
             _allCoorsesList = self.model.get('_allCoorsesList'),
@@ -2170,7 +2239,7 @@ var AdminView = function(model) {
             if (_selectedCatalogsLength === self.model.get('currentresponsecount')) {
                 self.cursordefault();
                 if ($(".entire-catalog").is(":checked")) {
-                    $.each(totalCourses, function(index, course) {
+                    $.each(totalCourses, function (index, course) {
                         if (originalCourseData && originalCourseData.indexOf(course.id) > -1) {
                             elementClass = 'oldEle';
                         } else {
@@ -2185,7 +2254,7 @@ var AdminView = function(model) {
                     self.model.set('selectedCourses', selectedCourses)
                     $(".course-list select").html(courseSelectListHTML);
                 } else {
-                    $.each(totalCourses, function(index, course) {
+                    $.each(totalCourses, function (index, course) {
                         if (selectiveCourses.indexOf(course.id) > -1) {
                             if (originalCourseData && originalCourseData.indexOf(course.id) > -1) {
                                 elementClass = 'oldEle';
@@ -2216,13 +2285,13 @@ var AdminView = function(model) {
             $(".corseselectList select").html(courseSelectListHTML);
         }
         parametersObj.courseSelectListHTML = courseSelectListHTML;
-        if(self.model.get('_domain')!=null)
-        self.setSelectCourseDropdown(self.model.get('_domain').data.subscribedcourselist);
+        if (self.model.get('_domain') != null)
+            self.setSelectCourseDropdown(self.model.get('_domain').data.subscribedcourselist);
         self.bindevent();
     };
 
     //1529
-    this.submitDomainFromData = function(res, parametersObj) {
+    this.submitDomainFromData = function (res, parametersObj) {
         var selectedCourseCatalog = parametersObj.selectedCourseCatalog,
             state_list = parametersObj.state_list;
         self.cursordefault();
@@ -2238,7 +2307,7 @@ var AdminView = function(model) {
         self.cursordefault();
     };
 
-    this.domainFromError = function(err) {
+    this.domainFromError = function (err) {
         self.cursordefault();
         alert('Encountered an error while createdistrict');
         $('.grayBg').hide();
@@ -2246,14 +2315,14 @@ var AdminView = function(model) {
     };
 
     //1567
-    this.editDomainFromData = function(res, parametersObj) {
+    this.editDomainFromData = function (res, parametersObj) {
         var formElementSelector = parametersObj.formElementSelector,
             totalCourses,
             courseListURI,
             loopVar,
             _selectedCatalogs,
             state_list = parametersObj.state_list;
-        self.resetDomainVar(res,'_domain');
+        self.resetDomainVar(res, '_domain');
         self.cursorwait();
         self.model.set('_result', res);
         formElementSelector.find('select.editdomainlist').val(res.data.domain.parentid);
@@ -2293,7 +2362,7 @@ var AdminView = function(model) {
         self.model.set('selectedCourses', []);
         self.model.set('_selectedCatalogs', res.data.subscribedproviderlist);
         self.model.set('originalCourseData', res.data.subscribedcourselist);
-        $('.editpopupBox .corsecatalogList').find('option').each(function(i) {
+        $('.editpopupBox .corsecatalogList').find('option').each(function (i) {
             if (res.data.subscribedproviderlist == null) {
                 self.cursordefault();
                 $('.popGrayBg').show();
@@ -2307,11 +2376,11 @@ var AdminView = function(model) {
                     self.model.ajaxObjCall({ //1567
                         url: courseListURI
                     }, self.courseListData, self.commonError, void 0, {
-                        successVal: {
-                            res: res,
-                            catalogId: catalogID
-                        }
-                    });
+                            successVal: {
+                                res: res,
+                                catalogId: catalogID
+                            }
+                        });
                 } else {
                     self.cursordefault();
                     $('.popGrayBg').show();
@@ -2322,34 +2391,34 @@ var AdminView = function(model) {
         $('.editpopupBox').find(".course-list ul input").attr('checked', 'checked');
     };
 
-    this.editDomainFromError = function(err) {
+    this.editDomainFromError = function (err) {
         var formElementSelector = parametersObj.formElementSelector;
         self.cursordefault();
         alert("Error fetching domain data for", formElementSelector.data("domain-id"));
     };
-    
+
     //update _allCoorsesList map with the catalogId and its course
-    this.updateCatalogCourse=function(data,catalogID){
-    	var totalCoursesForDist=self.model.get('_allCoorsesList');
-    	if(self.model.get('_allCoorsesList')[catalogID]){
-    		var catalogvsCourse={};
-    		catalogvsCourse[catalogID]=data.data.domain;
-    		$.extend(self.model.get('_allCoorsesList'),catalogvsCourse);
-    	}
+    this.updateCatalogCourse = function (data, catalogID) {
+        var totalCoursesForDist = self.model.get('_allCoorsesList');
+        if (self.model.get('_allCoorsesList')[catalogID]) {
+            var catalogvsCourse = {};
+            catalogvsCourse[catalogID] = data.data.domain;
+            $.extend(self.model.get('_allCoorsesList'), catalogvsCourse);
+        }
     };
 
-    this.courseListData = function(data, parametersObj) {
-    	self.updateCatalogCourse(data,parametersObj.catalogId);
+    this.courseListData = function (data, parametersObj) {
+        self.updateCatalogCourse(data, parametersObj.catalogId);
         var courseSelectListHTML = '',
             res = parametersObj.res,
             selectedCourses = self.model.get('selectedCourses'),
             totalCourses = self.model.get('totalCoursesForDist'),
-            selectedCatalog=self.model.get('_selectedCatalogs'),
-        totalCourses = totalCourses.concat(data.data.domain),allDropDownCourses=[];
+            selectedCatalog = self.model.get('_selectedCatalogs'),
+            totalCourses = totalCourses.concat(data.data.domain), allDropDownCourses = [];
 
         self.model.set('totalCoursesForDist', totalCourses);
         self.model.set('_totalCourseArry', totalCourses);
-        $.each(totalCourses, function(index, course) {
+        $.each(totalCourses, function (index, course) {
             if (res.data.subscribedcourselist.indexOf(course.id) > -1) {
                 courseSelectListHTML += '<option type="checkbox" data-course-id="' + course.id + '" data-course-name="' + course.title + '" data-domain-id="' + course.domainid + '" selected="selected">' + course.title + '</option>';
                 if (selectedCourses.indexOf(course.id) === -1) {
@@ -2363,21 +2432,20 @@ var AdminView = function(model) {
         });
         self.model.set('selectedCourses', selectedCourses);
         $('.editpopupBox').find(".course-list select").html(courseSelectListHTML);
-        if(res.data.customization.edivatelearn.fullsubscription){
-        	self.setEntireSelectiveradio($('.editpopupBox'), true, false);
-        	self.setSelectCourseDropdown(selectedCourses);
-        	self.setSelectCourseDropdown(allDropDownCourses);
-           }
-           else
-           	{
+        if (res.data.customization.edivatelearn.fullsubscription) {
+            self.setEntireSelectiveradio($('.editpopupBox'), true, false);
+            self.setSelectCourseDropdown(selectedCourses);
+            self.setSelectCourseDropdown(allDropDownCourses);
+        }
+        else {
            	self.setEntireSelectiveradio($('.editpopupBox'), false, true);
-      		 }
+        }
         self.cursordefault();
         $('.popGrayBg').show();
         self.bindevent();
     };
 
-    this.addSchoolData = function(res, parametersObj) {
+    this.addSchoolData = function (res, parametersObj) {
         var eqNo = parametersObj.eqNo,
             i,
             state_list = parametersObj.state_list;
@@ -2407,16 +2475,16 @@ var AdminView = function(model) {
         }
     };
 
-    this.resetDomainVar = function(res,domain) {
+    this.resetDomainVar = function (res, domain) {
         if (self.model.get(domain)) {
-        	self.model.set(domain,{})
+            self.model.set(domain, {})
         }
-        self.model.set(domain,res)
+        self.model.set(domain, res)
     };
 
 
     //1697
-    this.schoolPopupDataCall = function(res, parametersObj) {
+    this.schoolPopupDataCall = function (res, parametersObj) {
         var dataParam = parametersObj.dataParam,
             state_list = parametersObj.state_list;
         state_list = '';
@@ -2426,9 +2494,9 @@ var AdminView = function(model) {
         $('.editschlpopupBox .schooldistrictlist').val(dataParam);
         $('.addschlpopupBox .schooldistrictlist').val(dataParam);
         if (res.messageType === "SUCCESS") {
-        	//This parameter is a flag to reset course selection box to blank
-        	res['SelectiveBoxReset']=true;
-            self.resetDomainVar(res,'_domain');
+            //This parameter is a flag to reset course selection box to blank
+            res['SelectiveBoxReset'] = true;
+            self.resetDomainVar(res, '_domain');
             self.model.set('_globalLicensecNum', (res.data.customization.edivatelearn.nooflicense != null) ? res.data.customization.edivatelearn.nooflicense : 0)
             $('.editschlpopupBox .licensetype').val(res.data.customization.edivatelearn.licensetype);
             $('.addschlpopupBox .licensetype').val(res.data.customization.edivatelearn.licensetype);
@@ -2444,7 +2512,7 @@ var AdminView = function(model) {
             $('#snw_balck_data1').val(res.data.customization.edivatelearn.pooltype);
             $('#snw_popupInputDate').val(res.data.customization.edivatelearn.pilotenddate);
             //update the course list of a catalog when add of a school domain is called
-            $.each(res.data.subscribedproviderlist, function(index, val) {
+            $.each(res.data.subscribedproviderlist, function (index, val) {
                 self.getCatalogCourse(val, undefined);
             });
             self.populateCatalogsCourses(res, 'create');
@@ -2456,7 +2524,7 @@ var AdminView = function(model) {
         }
     };
 
-    this.populateCatalogsCourses = function(resultdistrict, type) {
+    this.populateCatalogsCourses = function (resultdistrict, type) {
         var allCatalogs = self.model.get('allCatalogsList'),
             allCatalogsListDistrict = self.model.get('allCatalogsListDistrict'),
             _allCoorsesListDistrict = self.model.get('_allCoorsesListDistrict'),
@@ -2476,7 +2544,7 @@ var AdminView = function(model) {
                 if (subscribedproviderlist && subscribedproviderlist.indexOf(allCatalogsListDistrict[loopVar].id) > -1) {
                     currentCatalog = allCatalogsListDistrict[loopVar].id;
                     tempArrCatalogs.push(allCatalogsListDistrict[loopVar]);
-                    if (currentCatalog == self.model.get('_customCatalogId')) {} else {
+                    if (currentCatalog == self.model.get('_customCatalogId')) { } else {
                         if (_allCoorsesListDistrict[currentCatalog]) {
                             for (loopVar2 = 0; loopVar2 < _allCoorsesListDistrict[currentCatalog].length; loopVar2++) {
                                 if (!tempArrCourse[currentCatalog]) {
@@ -2510,22 +2578,22 @@ var AdminView = function(model) {
             } else {
                 html += '<option id="checkbox' + loopVar + '" type="checkBox" data-domain-id="' + allCatalogs[loopVar].id + '" data-course-list="">' + allCatalogs[loopVar].name + '</option>';
             }
-           
+
         }
 
         var courseListURI = self.model.get('_config').getDomainData + "/" + districtDomain;
         self.model.ajaxObjCall({ //1567
             url: courseListURI
         }, self.addCourseListData, self.commonError, void 0, {
-            successVal: {
-                popup: popup,
-                type: type,
-                subscribedcourselist: subscribedcourselist,
-                schoolDomain: resultdistrict,
-                allCatalogs : allCatalogs,
-                subscribedproviderlist : subscribedproviderlist
-            }
-        });
+                successVal: {
+                    popup: popup,
+                    type: type,
+                    subscribedcourselist: subscribedcourselist,
+                    schoolDomain: resultdistrict,
+                    allCatalogs: allCatalogs,
+                    subscribedproviderlist: subscribedproviderlist
+                }
+            });
 
         if (subscribedproviderlist && subscribedproviderlist.length === 0) {
             popup.find(".course-list select").html('');
@@ -2535,9 +2603,9 @@ var AdminView = function(model) {
         self.cursordefault();
         self.bindevent();
     };
-    
+
     //For school
-    this.addCourseListData = function(districtData, parametersObj) {
+    this.addCourseListData = function (districtData, parametersObj) {
         var courseSelectListHTML = '',
             popup = parametersObj.popup,
             type = parametersObj.type,
@@ -2551,23 +2619,23 @@ var AdminView = function(model) {
             subscribedcourselist = parametersObj.subscribedcourselist,
             distSubsCourseList = districtData.data.subscribedcourselist,
             distCourseProviderList = districtData.data.subscribedproviderlist,
-            selector,allCatalogs=parametersObj.allCatalogs,
-            districtCatalogObject=[],html="",
-            subscribedproviderlist=parametersObj.subscribedproviderlist;
-        
-        $.each(distCourseProviderList,function(index,provider){
-        	$.each(allCatalogs,function(key,catalogValue){
-        		if(provider==catalogValue.id){
-        			districtCatalogObject.push(catalogValue);
-        		}
-        	});
+            selector, allCatalogs = parametersObj.allCatalogs,
+            districtCatalogObject = [], html = "",
+            subscribedproviderlist = parametersObj.subscribedproviderlist;
+
+        $.each(distCourseProviderList, function (index, provider) {
+            $.each(allCatalogs, function (key, catalogValue) {
+                if (provider == catalogValue.id) {
+                    districtCatalogObject.push(catalogValue);
+                }
+            });
         });
-        
-        $.each(districtCatalogObject,function(index,val){
-        	 html += '<option id="checkbox' + index + '" type="checkBox" data-domain-id="' +val.id + '" data-course-list="" >' + val.name + '</option>';
+
+        $.each(districtCatalogObject, function (index, val) {
+            html += '<option id="checkbox' + index + '" type="checkBox" data-domain-id="' + val.id + '" data-course-list="" >' + val.name + '</option>';
         });
-        
-        self.resetDomainVar(districtData,'_parentDomain');
+
+        self.resetDomainVar(districtData, '_parentDomain');
         for (loopVar = 0; loopVar < distCourseProviderList.length; loopVar++) {
             //Commented due to a bug reported,no course is displayed during adding a school in a district
             //if (_selectedCatalogs[loopVar] != self.model.get('_customCatalogId')) {
@@ -2576,9 +2644,9 @@ var AdminView = function(model) {
         }
         self.model.set('totalCoursesForDist', totalCourses);
         self.model.set('_totalCourseArry', totalCourses);
-        $.each(totalCourses, function(index, course) {
+        $.each(totalCourses, function (index, course) {
             if (type === 'create') {
-            	selector='addschlpopupBox';
+                selector = 'addschlpopupBox';
                 if (distSubsCourseList.indexOf(course.id) > -1) {
                     courseSelectListHTML += '<option type="checkbox" data-course-id="' + course.id + '" data-course-name="' + course.title + '" data-domain-id="' + course.domainid + '" selected="selected">' + course.title + '</option>';
 
@@ -2587,14 +2655,14 @@ var AdminView = function(model) {
                     }
                 }
             } else {
-            	selector='editschlpopupBox';
+                selector = 'editschlpopupBox';
                 if (distSubsCourseList.indexOf(course.id) > -1) {
                     courseSelectListHTML += '<option type="checkbox" data-course-id="' + course.id + '" data-course-name="' + course.title + '" data-domain-id="' + course.domainid + '" >' + course.title + '</option>';
-                } 
                 }
+            }
         });
-        
-                
+
+
         self.model.set('selectedCourses', subscribedcourselist);
         popup.find(".course-list select").html(courseSelectListHTML);
         popup.find('.catalog-list select').html(html);
@@ -2603,17 +2671,17 @@ var AdminView = function(model) {
         self.prepareSchoolCourseDropDown(_selectedCatalogs);
         self.setSelectCourseDropdown(subscribedcourselist);
         //fix for scnario-1
-        if(type==='edit'){
-        	self.toggleEntireSelectiveRadio((parametersObj.schoolDomain.data.subscribedcourselist).length,$('.'+selector));
-        	//self.setEditSchoolEntireSelectiveRadio(districtData.data.subscribedcourselist,parametersObj.schoolDomain.data.subscribedcourselist,$('.'+selector));
+        if (type === 'edit') {
+            self.toggleEntireSelectiveRadio((parametersObj.schoolDomain.data.subscribedcourselist).length, $('.' + selector));
+            //self.setEditSchoolEntireSelectiveRadio(districtData.data.subscribedcourselist,parametersObj.schoolDomain.data.subscribedcourselist,$('.'+selector));
         }
         //self.toggleEntireSelectiveRadio((parametersObj.schoolDomain.data.subscribedcourselist).length, $('.'+selector));
         self.cursordefault();
         $('.popGrayBg').show();
         self.bindevent();
     };
-    
-    this.getProviderListDataCall = function(res, parametersObj) {
+
+    this.getProviderListDataCall = function (res, parametersObj) {
         var dataParam = parametersObj.dataParam,
             t,
             html,
@@ -2651,12 +2719,12 @@ var AdminView = function(model) {
 
     };
 
-    this.commonError = function() {
+    this.commonError = function () {
         alert('Error page loading.');
     };
 
     //Handler functions
-    this.circlePlusHandler = function() {
+    this.circlePlusHandler = function () {
         $('.grayBg').css({
             'width': self.model.get('win_width'),
             'height': self.model.set('win_height')
@@ -2664,7 +2732,7 @@ var AdminView = function(model) {
         $('.addNew').show();
     };
 
-    this.loginKeyUpPrefix = function($element) {
+    this.loginKeyUpPrefix = function ($element) {
         var loginPrefx = $.trim($element.val()),
             loginArray = loginPrefx.split('-'),
             loginUndifndChk = loginArray[1] != undefined ? loginArray[1] : '',
@@ -2673,7 +2741,7 @@ var AdminView = function(model) {
         $('.externalId,#snw_Enter_External_ID').val(dataWraper.toLowerCase() + '-' + loginUndifndChk.toLowerCase());
     };
 
-    this.domainNameKeyUp = function($element, loginArray) {
+    this.domainNameKeyUp = function ($element, loginArray) {
         var inputDomVal = $element.val(),
             splitArry,
             maxCharLength = 50,
@@ -2695,7 +2763,7 @@ var AdminView = function(model) {
         }
     };
 
-    this.applyMaxLimit = function($element) {
+    this.applyMaxLimit = function ($element) {
         var inputDomVal = $element.val(),
             limaxCharLength = 5,
             maxCharLength = 50;
@@ -2709,7 +2777,7 @@ var AdminView = function(model) {
         }
     };
 
-    this.popupBoxHandler = function() {
+    this.popupBoxHandler = function () {
         var startDate,
             endDate;
         startDate = $('.subscription-start:visible').val();
@@ -2727,7 +2795,7 @@ var AdminView = function(model) {
         }
     };
 
-    this.submitDistrictHandler = function($element) {
+    this.submitDistrictHandler = function ($element) {
         var lenght,
             trueCnt,
             startDate,
@@ -2737,7 +2805,7 @@ var AdminView = function(model) {
             dateSplitend;
         lenght = $('.popupBox td>input[type="text"]').length;
         trueCnt = 0;
-        $('.popupBox td>input[type="text"]').each(function() {
+        $('.popupBox td>input[type="text"]').each(function () {
             if ($.trim($(this).val()) === '') {
                 $(this).next('label').show();
             } else {
@@ -2786,7 +2854,7 @@ var AdminView = function(model) {
         }
     };
 
-    this.isContentsValid = function($element) {
+    this.isContentsValid = function ($element) {
         var noSpecialChar = $element.attr('no-spcl-char'),
             contents = ($element.val()).toString(),
             spclCharArr = [],
@@ -2823,7 +2891,7 @@ var AdminView = function(model) {
         return false;
 
     };
-    this.editSubmitHandler = function($element) {
+    this.editSubmitHandler = function ($element) {
         var lenght,
             trueCnt,
             startDate,
@@ -2835,7 +2903,7 @@ var AdminView = function(model) {
             dateSplitend;
         lenght = $('.editpopupBox td>input[type="text"]').length;
         trueCnt = 0;
-        $('.editpopupBox td>input[type="text"]').each(function() {
+        $('.editpopupBox td>input[type="text"]').each(function () {
             if ($.trim($(this).val()) === '') {
                 $(this).next('label').show();
             } else {
@@ -2896,11 +2964,11 @@ var AdminView = function(model) {
         }
     };
 
-    this.schlEditSubmitHandler = function($element) {
+    this.schlEditSubmitHandler = function ($element) {
         var localCount = 0,
             errormsg,
             disabledCount = 0;
-        $('.editschlpopupBox .formTable input[type="text"]').each(function() {
+        $('.editschlpopupBox .formTable input[type="text"]').each(function () {
             if ($.trim($(this).val()) === '' && !$(this).is('[disabled=disabled]')) {
                 $(this).next('label').show();
 
@@ -2938,7 +3006,7 @@ var AdminView = function(model) {
         }
     };
 
-    this.editAddSchool = function($element) {
+    this.editAddSchool = function ($element) {
         var dId;
         $('.grayBg,.popGrayBg,.editschlpopupBox').hide();
         $('.popupBox,.editpopupBox,.addschlpopupBox').hide();
@@ -2947,14 +3015,14 @@ var AdminView = function(model) {
     };
 
     //      34894868
-    this.schlsubmitHandler = function($element) {
+    this.schlsubmitHandler = function ($element) {
         var localCount,
             errormsg,
             disabledCount;
         $('.hidee').hide();
         localCount = 0;
         disabledCount = 0;
-        $('.addschlpopupBox .formTable input[type="text"]').each(function() {
+        $('.addschlpopupBox .formTable input[type="text"]').each(function () {
             if ($.trim($(this).val()) === '' && !$(this).is('[disabled=disabled]')) {
                 $(this).next('label').show();
 
@@ -2991,26 +3059,26 @@ var AdminView = function(model) {
         }
     };
 
-    this.createPopupRadio = function($element) {
+    this.createPopupRadio = function ($element) {
         var data_id = $element.attr('data-id');
         if (data_id === 'select') {
-            $('#snwselectCourse li').each(function() {
+            $('#snwselectCourse li').each(function () {
                 $(this).find('input').prop('checked', false);
             });
-            $('#snwSelectCourse li').each(function() {
+            $('#snwSelectCourse li').each(function () {
                 $(this).find('input').prop('checked', false);
             });
         } else {
-            $('#snwselectCourse li').each(function() {
+            $('#snwselectCourse li').each(function () {
                 $(this).find('input').prop('checked', true);
             });
-            $('#snwSelectCourse li').each(function() {
+            $('#snwSelectCourse li').each(function () {
                 $(this).find('input').prop('checked', true);
             });
         }
     };
 
-    this.disTrictListHandler = function($element) {
+    this.disTrictListHandler = function ($element) {
         var html,
             result,
             attrId,
@@ -3036,14 +3104,14 @@ var AdminView = function(model) {
             crossDomain: true,
             contentType: "application/json"
         }, self.districtTabBoxData, self.commonError, void 0, {
-            successVal: {
-                thisContext: thisContext,
-                attrId: attrId
-            }
-        });
+                successVal: {
+                    thisContext: thisContext,
+                    attrId: attrId
+                }
+            });
     };
 
-    this.showEntryHandler = function($element) {
+    this.showEntryHandler = function ($element) {
         var result,
             html;
         self.model.set('_rowView', $element.val());
@@ -3056,13 +3124,13 @@ var AdminView = function(model) {
             crossDomain: true,
             contentType: "application/json"
         }, self.displayEntry, self.commonError, void 0, {
-            successVal: {
-                html: html
-            }
-        });
+                successVal: {
+                    html: html
+                }
+            });
     };
 
-    this.NextCirHandler = function($element) {
+    this.NextCirHandler = function ($element) {
         var result,
             html,
             _previousCountArray = self.model.get('_previousCountArray'),
@@ -3088,13 +3156,13 @@ var AdminView = function(model) {
             crossDomain: true,
             contentType: "application/json",
         }, self.displayNextSchoolEntry, self.commonError, void 0, {
-            successVal: {
-                html: html
-            }
-        });
+                successVal: {
+                    html: html
+                }
+            });
     };
 
-    this.PreviousCirHandler = function($element) {
+    this.PreviousCirHandler = function ($element) {
         var result,
             html;
         result = self.model.get('configResult');
@@ -3113,13 +3181,13 @@ var AdminView = function(model) {
             crossDomain: true,
             contentType: "application/json",
         }, self.displayNextSchoolEntry, self.commonError, void 0, {
-            successVal: {
-                html: html
-            }
-        })
+                successVal: {
+                    html: html
+                }
+            })
     };
 
-    this.DomainNextHandler = function($element) {
+    this.DomainNextHandler = function ($element) {
         var result,
             html,
             idUrl,
@@ -3131,7 +3199,7 @@ var AdminView = function(model) {
             return false;
         }
 
-        idTrcaker = Math.max.apply(Math, $('.domainContainer>ul>li').map(function() {
+        idTrcaker = Math.max.apply(Math, $('.domainContainer>ul>li').map(function () {
             return this.id;
         }));
 
@@ -3151,13 +3219,13 @@ var AdminView = function(model) {
             crossDomain: true,
             contentType: "application/json"
         }, self.displayNextDomain, self.commonError, self.nextDomainCallComplete, {
-            successVal: {
-                html: html
-            }
-        });
+                successVal: {
+                    html: html
+                }
+            });
     };
 
-    this.DomainPreviousHandler = function($element) {
+    this.DomainPreviousHandler = function ($element) {
         var result,
             html,
             idUrl,
@@ -3183,13 +3251,13 @@ var AdminView = function(model) {
             crossDomain: true,
             contentType: "application/json"
         }, self.displayNextDomain, self.commonError, self.nextDomainCallComplete, {
-            successVal: {
-                html: html
-            }
-        });
+                successVal: {
+                    html: html
+                }
+            });
     };
 
-    this.domainShowEntryHandler = function($element) {
+    this.domainShowEntryHandler = function ($element) {
         var result,
             html,
             idUrl,
@@ -3208,20 +3276,20 @@ var AdminView = function(model) {
             crossDomain: true,
             contentType: "application/json"
         }, self.domainShowEntry, self.commonError, self.nextDomainCallComplete, {
-            successVal: {
-                html: html
-            }
-        });
+                successVal: {
+                    html: html
+                }
+            });
     };
 
-    this.newDomTabHandler = function($element) {
-        $('.newDomTab li').each(function() {
+    this.newDomTabHandler = function ($element) {
+        $('.newDomTab li').each(function () {
             if ($(this).hasClass('active')) {
                 $(this).removeClass('active');
             }
         });
         $element.addClass('active');
-        $('.newDomTab li').each(function(g) {
+        $('.newDomTab li').each(function (g) {
             if ($(this).hasClass('active')) {
                 $('#panel_' + g + '').show();
             } else {
@@ -3230,7 +3298,7 @@ var AdminView = function(model) {
         });
     };
 
-    this.adminNav = function($element) {
+    this.adminNav = function ($element) {
         if ($element.hasClass('active')) {
             $('.adminNavList ul').slideUp(500);
             $('.adminNav li').removeClass('active');
@@ -3247,7 +3315,7 @@ var AdminView = function(model) {
             }).slideDown(500);
         }
     };
-    this.adminNavFirst = function($element) {
+    this.adminNavFirst = function ($element) {
         var localIndex, cssLeft, cssTop;
         if ($element.hasClass('active')) {
             $('.adminNavList ul').slideUp(500);
@@ -3264,18 +3332,18 @@ var AdminView = function(model) {
                 'top': cssTop
             }).slideDown(500);
         }
-        
+
         console.log("3202- first");
     };
-    this.adminNavZero = function() {
+    this.adminNavZero = function () {
         $('.adminNavList ul').slideUp(500);
         $('.adminNav li').removeClass('active');
         $('#snw-license-usage-report02,#snw-license-usage-report05,.user').hide();
         $('#adminContainer,.welcome').show();
-        
+
         console.log("3210- zero");
     }
-    this.courseCatalogHandler = function(e) {
+    this.courseCatalogHandler = function (e) {
         e.stopPropagation();
         if ($('.corsecatalogList').is(':visible')) {
             // $('.corsecatalogList').hide();
@@ -3289,7 +3357,7 @@ var AdminView = function(model) {
         return false;
     };
 
-    this.courseSelectHandler = function(e) {
+    this.courseSelectHandler = function (e) {
         e.stopPropagation();
         if ($('.editpopupBox').is(':visible')) {
             self.editnewfunction();
@@ -3303,7 +3371,7 @@ var AdminView = function(model) {
         return false;
     };
 
-    this.SearchClickHandler = function() {
+    this.SearchClickHandler = function () {
         var result,
             srchData,
             searchLimit = 25,
@@ -3324,13 +3392,13 @@ var AdminView = function(model) {
             crossDomain: true,
             contentType: "application/json"
         }, self.searchDataDisplay, self.commonError, void 0, {
-            successVal: {
-                html: html
-            }
-        });
+                successVal: {
+                    html: html
+                }
+            });
     };
 
-    this.documentClickHandler = function(e) {
+    this.documentClickHandler = function (e) {
         if ('loginPerson' != $(e.target).attr('class')) {
             if ('loggerName' != $(e.target).attr('class')) {
                 $('#snwLPMenu').hide();
@@ -3362,9 +3430,9 @@ var AdminView = function(model) {
         }
     };
 
-    this.distrctAddHandler = function($element) {
+    this.distrctAddHandler = function ($element) {
         self.model.set('_selectedCatalogs', []);
-        self.model.set('_domain',null);
+        self.model.set('_domain', null);
         self.setEntireSelectiveradio($('.popupBox'), true, false);
         $('.popupBox').find('.inputTracker input').prop("checked", false);
         $('.hidee').hide();
@@ -3377,7 +3445,7 @@ var AdminView = function(model) {
         self.model.set('isSchoolPopup', false);
         self.model.set('allCatalogsList', self.model.get('allCatalogsListDistrict'));
         self.model.set('_allCoorsesList', self.model.get('_allCoorsesListDistrict'));
-        $('.popupBox .formTable input').each(function() {
+        $('.popupBox .formTable input').each(function () {
             $(this).val('');
         });
         $('.course-list').html('<select id="snwselectCourse" class="selectCourse js-example-placeholder-multiple" multiple>' + '<option>Please select a Course Catalog first.</option>' + '<option></option>' + '</select>');
@@ -3391,7 +3459,7 @@ var AdminView = function(model) {
     };
 
 
-    this.catalogListInputHandler = function($element) {
+    this.catalogListInputHandler = function ($element) {
         var inputVal,
             thisId,
             domainId,
@@ -3415,7 +3483,7 @@ var AdminView = function(model) {
     };
 
 
-    this.editDistrictHandler = function($element) {
+    this.editDistrictHandler = function ($element) {
         $('.editpopupBox').find('.inputTrackerEdit input').prop("checked", false);
         $('.editdomainlist').html($('.statename').html());
         $('.editpopupBox').fadeIn('slow');
@@ -3438,7 +3506,7 @@ var AdminView = function(model) {
         $('.editdomainlist').attr('value', self.model.get('_optionselector'));
     };
 
-    this.addSchoolHandler = function($element) {
+    this.addSchoolHandler = function ($element) {
         $('.hidee').hide();
         var stateSelctedVal = $('.statename').val(),
             startDate, pilotDate;
@@ -3471,19 +3539,19 @@ var AdminView = function(model) {
         }
     };
 
-    this.addSchlPopupBox = function($element) {
+    this.addSchlPopupBox = function ($element) {
         self.cursorwait();
         var dataVal = $element.val();
         self.addSchool(dataVal, 0);
     };
 
-    this.editSchoolDistrictList = function($element) {
+    this.editSchoolDistrictList = function ($element) {
         self.cursorwait();
         var dataVal = $element.val();
         self.schoolPopupData(dataVal);
     };
 
-    this.courseCatalogListInput = function($element) {
+    this.courseCatalogListInput = function ($element) {
         var localLength,
             lclLngthEdit,
             indexArray, data_domain_id,
@@ -3525,7 +3593,7 @@ var AdminView = function(model) {
         self.updateCourseList();
     };
 
-    this.editSchoolPopHandler = function($element) {
+    this.editSchoolPopHandler = function ($element) {
         var stateSelctedVal = $('.statename').val(),
             startDate, pilotDate;
         stateSelctedVal = $element.parents('.districtTabBox').find('.districtTabBoxHead').attr('parentid');
@@ -3547,7 +3615,7 @@ var AdminView = function(model) {
         self.editSchool($('.editschlpopupBox'), $element.parents('tr').attr('data-id'), stateSelctedVal);
     };
 
-    this.beforeSendEventHandler = function(xhr, settings) {
+    this.beforeSendEventHandler = function (xhr, settings) {
         var _sessionData = self.model.get('_sessionData');
         if (_sessionData) {
             xhr.setRequestHeader('Authorization', 'Bearer ' + self.model.get('_globalSccessToken'));
@@ -3558,7 +3626,7 @@ var AdminView = function(model) {
 
     //reports start
 
-    this.snwReportsLienceLiFirst = function($element) {
+    this.snwReportsLienceLiFirst = function ($element) {
         var html, i;
         $('.total-value-col,.user').hide();
         $('#snw-val051').prop('checked', true);
@@ -3570,31 +3638,31 @@ var AdminView = function(model) {
         $('#snwSubscription-end2').val('');
         $('#snwSubscription-start2').val(self.getCurrentDate());
         html = '<li><input type="checkbox" class="allSelect">Select All</li>';
-        $('.stateInput').html(function() {
+        $('.stateInput').html(function () {
             for (i = 0; i < self.model.get('_stateId').length; i++) {
                 html += '<li><input id="checkbox' + i + '" data-test="stateTest' + i + '" type="checkBox" data-value="' + self.model.get('_stateId')[i] + '"  statename="' + self.model.get('_stateName')[i] + '">' + self.model.get('_stateName')[i] + '</li>';
 
             }
             return html;
         });
-        $('.stateDataListing Input[type="checkbox"]').off('click').on('click', function() {
+        $('.stateDataListing Input[type="checkbox"]').off('click').on('click', function () {
             self.stateDataListingInput($(this));
             if ($(this).prop('checked') != 'checked') {
                 $('.stateInput input.allSelect').prop('checked', false);
             }
         });
-        $('.stateInput input.allSelect').off('click').on('click', function() {
+        $('.stateInput input.allSelect').off('click').on('click', function () {
 
             if ($(this).prop('checked') == true) {
                 $('.stateInput input[type="checkbox"]').prop('checked', 'checked');
-                $('.stateInput').find('Input:checkbox:checked').each(function() {
+                $('.stateInput').find('Input:checkbox:checked').each(function () {
                     self.stateDataListingInput($(this));
                 });
                 self.cursorwait();
                 self.model.set('deselectAll', false);
             } else {
                 $('.stateInput input[type="checkbox"]').prop('checked', false);
-                $('.stateInput').find('Input:checkbox').each(function() {
+                $('.stateInput').find('Input:checkbox').each(function () {
                     self.stateDataListingInput($(this));
                 });
                 self.model.set('deselectAll', true);
@@ -3605,7 +3673,7 @@ var AdminView = function(model) {
         console.log("3539");
     };
 
-    this.stateDataListingInput = function($element) {
+    this.stateDataListingInput = function ($element) {
         var html = '',
             i,
             statename = $element.attr('statename'),
@@ -3617,12 +3685,12 @@ var AdminView = function(model) {
                     type: "GET",
                     url: self.model.get('_config').DistrictList + '/' + stateSelctedVal
                 }, self.stateDataListingInputSucc, self.commonError, void 0, {
-                    successVal: {
-                        stateTest: stateTest,
-                        html: html,
-                        statename: statename
-                    }
-                });
+                        successVal: {
+                            stateTest: stateTest,
+                            html: html,
+                            statename: statename
+                        }
+                    });
             } else {
                 $('.domainInput input[data-test=' + stateTest + ']').parent().remove();
                 $('.domainInput li.' + statename.replace(' ', '')).remove();
@@ -3636,29 +3704,29 @@ var AdminView = function(model) {
     };
 
     //repo685
-    this.stateDataListingInputSucc = function(rslte, parametersObj) {
+    this.stateDataListingInputSucc = function (rslte, parametersObj) {
         var i,
             stateTest = parametersObj.stateTest,
             statename = parametersObj.statename,
             html = '<li class="' + statename.replace(/ /i, '') + '"><span style="font-weight:bold; margin-left: -13px;">' + statename + '</span></li>';
         if (rslte.messageType === "SUCCESS") {
-            $('.domainInput').append(function() {
+            $('.domainInput').append(function () {
                 for (i = 0; i < rslte.data.domains.length; i++) {
                     html += '<li><input id="checkbox' + i + '" data-test="' + stateTest + '" type="checkBox" data-value="' + rslte.data.domains[i].id + '">' + rslte.data.domains[i].name + '</li>';
                 }
                 return html;
             });
-            setTimeout(function() {
+            setTimeout(function () {
                 self.cursordefault();
             }, 8000);
 
         }
-        $('.domainInput Input[type="checkbox"]').off('click').on('click', function() {
+        $('.domainInput Input[type="checkbox"]').off('click').on('click', function () {
             if ($(this).prop('checked') != 'checked') {
                 $('.domainInput input.allSelect').prop('checked', false);
             }
         });
-        $('.domainInput input.allSelect').off('click').on('click', function() {
+        $('.domainInput input.allSelect').off('click').on('click', function () {
             if ($(this).prop('checked') == true) {
                 $('.domainInput input[type="checkbox"]').prop('checked', 'checked');
 
@@ -3666,13 +3734,13 @@ var AdminView = function(model) {
                 $('.domainInput input[type="checkbox"]').prop('checked', false);
             }
         });
-        setTimeout(function() {
+        setTimeout(function () {
             self.cursordefault();
         }, 8000);
     };
 
 
-    this.removeDuplicates = function(arr) {
+    this.removeDuplicates = function (arr) {
         var uniqueArr = [],
             arrLength = arr.length,
             elementFromArr,
@@ -3686,7 +3754,7 @@ var AdminView = function(model) {
         return uniqueArr;
     };
 
-    this.snwreportsLienceLiSec = function($element) {
+    this.snwreportsLienceLiSec = function ($element) {
         var html = '<li><input type="checkbox" class="allSelect">Select All</li>',
             stateIds = self.model.get('_stateId'),
             i;
@@ -3700,32 +3768,32 @@ var AdminView = function(model) {
         $('.hidee').hide();
         $('.adminNavList ul').slideUp(500);
         html = '<li><input type="checkbox" class="allSelect">Select All</li>';
-        $('.stateInput').html(function() {
+        $('.stateInput').html(function () {
             for (i = 0; i < stateIds.length; i++) {
                 html += '<li><input id="checkboxPilot' + i + '" data-test="stateTest' + i + '" type="checkBox" data-value="' + self.model.get('_stateId')[i] + '" statename="' + self.model.get('_stateName')[i] + '">' + self.model.get('_stateName')[i] + '</li>';
             }
             return html;
         });
-        $('.stateInput input[type="checkbox"]').off('click').on('click', function() {
+        $('.stateInput input[type="checkbox"]').off('click').on('click', function () {
             self.model.set('_stateReportId', []);
 
-            $('.stateInput').find('Input:checkbox:checked').each(function() {
+            $('.stateInput').find('Input:checkbox:checked').each(function () {
                 self.model.get('_stateReportId').push($(this).attr('data-value'));
             });
             if ($(this).prop('checked') != 'checked') {
                 $('.stateInput input.allSelect').prop('checked', false);
             }
         });
-        $('.stateInput input.allSelect').off('click').on('click', function() {
+        $('.stateInput input.allSelect').off('click').on('click', function () {
             self.model.set('_stateReportId', []);
             if ($(this).prop('checked') == true) {
                 $('.stateInput input[type="checkbox"]').prop('checked', 'checked');
-                $('.stateInput').find('Input:checkbox:checked').each(function() {
+                $('.stateInput').find('Input:checkbox:checked').each(function () {
                     self.model.get('_stateReportId').push($(this).attr('data-value'));
                 });
             } else {
                 $('.stateInput input[type="checkbox"]').prop('checked', false);
-                $('.stateInput').find('Input:checkbox:checked').each(function() {
+                $('.stateInput').find('Input:checkbox:checked').each(function () {
                     self.model.get('_stateReportId').splice($(this).attr('data-value'), 1);
                 });
             }
@@ -3736,7 +3804,7 @@ var AdminView = function(model) {
     };
 
 
-    this.reportfisrteditHandler = function() {
+    this.reportfisrteditHandler = function () {
         $('iframe').contents().find(".findSolution").trigger('click');
         $('.hidee').hide();
         self.cursorwait();
@@ -3744,19 +3812,19 @@ var AdminView = function(model) {
         if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
             timer = 500;
         }
-        setTimeout(function() {
+        setTimeout(function () {
             self.reportFisrtEditTimeOut();
         }, timer);
     }
 
 
 
-    this.reportFisrtEditTimeOut = function() {
+    this.reportFisrtEditTimeOut = function () {
         var startDate,
             endDate,
             checkUrl;
         self.model.set('_ditrictReportId', []);
-        $('.domainInput input').each(function() {
+        $('.domainInput input').each(function () {
             if ($(this).is(':checked')) {
                 if ($(this).attr('data-value')) {
                     self.model.get('_ditrictReportId').push($(this).attr('data-value'));
@@ -3799,13 +3867,13 @@ var AdminView = function(model) {
             checkUrl = "reports/courselicensereport";
         }
         self.firefoxTimeOut(startDate, endDate, checkUrl);
-        $('#snw-license-usage-report02').find('iframe').on('load', function() {
+        $('#snw-license-usage-report02').find('iframe').on('load', function () {
             self.snwLicenseUsageReportFunc($(this));
         });
     };
 
 
-    this.firefoxTimeOut = function(startDate, endDate, checkUrl) {
+    this.firefoxTimeOut = function (startDate, endDate, checkUrl) {
         var startdateCopy,
             endDateCopy,
             $baseURL,
@@ -3850,9 +3918,9 @@ var AdminView = function(model) {
     };
 
 
-    this.snwLicenseUsageReportFunc = function($element) {
+    this.snwLicenseUsageReportFunc = function ($element) {
         var dataElement = $element,
-            myVar = setInterval(function() {
+            myVar = setInterval(function () {
                 if (!dataElement.contents().find('#container').is(':empty')) {
                     self.cursordefault();
                     $('#snw-license-usage-report02').find('iframe').contents().find('.jrPage').css('width', '100%');
@@ -3862,20 +3930,20 @@ var AdminView = function(model) {
     };
 
 
-    this.reportPostSec = function() {
+    this.reportPostSec = function () {
         $('iframe').contents().find(".findSolution").trigger('click');
         self.cursorwait();
         var timer = 500;
         if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
             timer = 500;
         }
-        setTimeout(function() {
+        setTimeout(function () {
             self.reportPost2TimeOut()
         }, timer);
     }
 
 
-    this.reportPost2TimeOut = function() {
+    this.reportPost2TimeOut = function () {
 
         $('.hidee').hide();
         var startDate = $('#snwSubscription-start5').val().replace(/\-/g, '/'),
@@ -3899,14 +3967,14 @@ var AdminView = function(model) {
             self.cursordefault();
         }
         self.reportpost2Firefox(startDate, endDate);
-        $('#snw-license-usage-report05').find('iframe').on('load', function() {
+        $('#snw-license-usage-report05').find('iframe').on('load', function () {
             self.snwLicenseUsageReportFifth($(this));
         });
 
     };
 
 
-    this.reportpost2Firefox = function(startDate, endDate) {
+    this.reportpost2Firefox = function (startDate, endDate) {
         var startdateCopy,
             endDateCopy,
             dateSplitStrat,
@@ -3947,9 +4015,9 @@ var AdminView = function(model) {
         }
     };
 
-    this.snwLicenseUsageReportFifth = function($element) {
+    this.snwLicenseUsageReportFifth = function ($element) {
         var dataElement = $element,
-            myVarr = setInterval(function() {
+            myVarr = setInterval(function () {
                 if (!dataElement.contents().find('#container').is(':empty')) {
                     self.cursordefault();
                     $('#snw-license-usage-report05').find('iframe').contents().find('.jrPage').css('width', '100%');
@@ -3957,7 +4025,7 @@ var AdminView = function(model) {
                 }
             }, 800);
     };
-    this.stateListingHandler = function(e) {
+    this.stateListingHandler = function (e) {
         e.stopPropagation();
         if ($('.stateDataListing').is(':visible')) {
             $('.stateDataListing').hide();
@@ -3969,7 +4037,7 @@ var AdminView = function(model) {
         }
         return false;
     };
-    this.domainListingHandler = function(e) {
+    this.domainListingHandler = function (e) {
         e.stopPropagation();
         if ($('.domainDataListing').is(':visible')) {
             $('.domainDataListing').hide();
@@ -3978,6 +4046,6 @@ var AdminView = function(model) {
         }
         return false;
     };
-    
-    
+
+
 };

@@ -261,3 +261,11 @@ background: white;
     padding-right:0px !important;
 }
 
+#copiedListDiv{
+    max-height: 300px;
+    overflow-y: scroll;
+    width: 80%;
+    margin-top: 5%;
+    padding-left: 2%;
+    
+}
