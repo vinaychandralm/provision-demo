@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="css/dev.css" type="text/css" media="screen" />
         <link href="https://select2.github.io/dist/css/select2.min.css" type="text/css" rel="stylesheet" />
 
-        <link href="https://select2.github.io/vendor/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css" type="text/css" rel="stylesheet" />
         <link href="https://select2.github.io/css/s2-docs.css" type="text/css" rel="stylesheet" >
 
 
@@ -50,7 +50,7 @@
           <p>This is a small modal.</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default"  id="modalDownloadBtn">Download</button>
+          <a type="button" class="btn btn-default"  id="modalDownloadBtn">Download</a>
         </div>
       </div>
     </div>
@@ -2348,7 +2348,7 @@ Demo setup Radio list to be placed from here;
       </div>
           <div class="course_type"> <span class="pull-left">Number of domains:</span>
         <div class="input-group spinner">
-              <input type="text" value="2" class="form-control">
+              <input id ="domainNumber" type="text" value="2" min="0" class="form-control">
               <div class="input-group-btn-vertical">
             <button type="button" class="btn btn-default"><i class="fa fa-caret-up"></i></button>
             <button type="button" class="btn btn-default"><i class="fa fa-caret-down"></i></button>

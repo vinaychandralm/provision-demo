@@ -44,7 +44,7 @@ var AdminModel = function() {
 		_globalSccessToken: "",
         _demoDomainUrl:'http://localhost:9090/provision/domain/list/all/47583342',
         _copyDomainUrl:'http://localhost:9090/provision/domain/create/demo?',
-		__reportDownload:"http://localhost:9090/provision/welcome/credential?domainId="
+		_reportDownload:"http://localhost:8080/provision/welcome/credential?domainId=48248287,48249368,48249369"
 //        _demoDomainUrl:'http://192.168.2.105:9090/provision/domain/list/all/47583342',
 //        _copyDomainUrl:'http://192.168.2.105:9090/provision/domain/create/demo?'
 	}

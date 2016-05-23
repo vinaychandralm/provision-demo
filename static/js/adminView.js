@@ -7,11 +7,25 @@ $('document').ready(function () {
 
 
     $('.spinner .btn:first-of-type').on('click', function () {
+         if(parseInt($('.spinner input').val(), 10) <1){
+            $('.spinner input').val(1);
+        }else{
         $('.spinner input').val(parseInt($('.spinner input').val(), 10) + 1);
+        }
     });
     $('.spinner .btn:last-of-type').on('click', function () {
-        $('.spinner input').val(parseInt($('.spinner input').val(), 10) - 1);
+        if(parseInt($('.spinner input').val(), 10) <=1){
+            $('.spinner input').val(1);
+        }else{
+            $('.spinner input').val(parseInt($('.spinner input').val(), 10) - 1);
+        }
     });
+    
+     $('#domainNumber').on('blur', function () {
+        if(parseInt($('.spinner input').val(), 10) <1 ||  isNaN(parseInt($('.spinner input').val(), 10) )){
+             $('.spinner input').val(1);
+        }
+     });
 
 });
 var AdminView = function (model) {
@@ -349,6 +363,7 @@ var AdminView = function (model) {
                         var modalHtml=  self.getModalHtml(response );
                         console.log(modalHtml);
                         $('#popUpModal .modal-body').html(modalHtml);
+                        $('#modalDownloadBtn').show();
                         $('#popUpModal').modal('show');
 
                         // $('#popUpModal .modal-body').text('Copy Successfull');
@@ -356,6 +371,7 @@ var AdminView = function (model) {
                     }
                     else if (response.messageType === "ERROR") {
                         $('#popUpModal .modal-body').text('Copy Unsuccessfull');
+                        $('#modalDownloadBtn').hide();
                         $('#popUpModal').modal('show');
                     }
                     self.cursordefault();
@@ -364,6 +380,7 @@ var AdminView = function (model) {
                 error: function (response) {
 
                     $('#popUpModal .modal-body').text('Copy Unsuccessfull');
+                    $('#modalDownloadBtn').hide();
                     $('#popUpModal').modal('show');
 
 
@@ -389,74 +406,86 @@ var AdminView = function (model) {
             
             var msg = '<p>Demo domains are created successfully</p>';
             var ulElem =msg+ '<div id="copiedListDiv"><ul>'+liEmenets+'<ul></div>';
+            
+           // $('#modalDownloadBtn').attr('href', self.model.get('_reportDownload')+self.model.downloadCourseId.join());
+ 
+            $('#modalDownloadBtn').attr('href', self.model.get('_reportDownload'));
+
             return ulElem;
         };
         
          $('#modalDownloadBtn').off('click').on('click', function () {
-             console.log('-----------',self.model.downloadCourseId.join());
-             
-             
-             $.ajax({
-                type: "GET",
-                url: self.model.get('__reportDownload') +self.model.downloadCourseId.join() ,
-                contentType: "application/json",
-                success: function (response) {
-                    // crossDomain: true,
-                    console.log(response)
-                  
-                },
-                error: function (response) {
+		 
+           $('#popUpModal').modal('hide');
 
-                },
+             
+            //  $.ajax({
+            //     type: "GET",
+            //     url: self.model.get('__reportDownload') +self.model.downloadCourseId.join() ,
+            //     contentType: "application/json",
+            //     success: function (response) {
+            //         // crossDomain: true,
+            //         console.log(response)
+                  
+            //     },
+            //     error: function (response) {
+
+            //     },
                
-            });
+            // });
              
              
          });
          
         $('#createLaunchBtn').off('click').on('click', function () {
 
-            console.log($('input[name=radio1]:checked', '.box_content').data('distid'));
+            // console.log($('input[name=radio1]:checked', '.box_content').data('distid'));
             var selectedRadioLen = $('input[name=radio1]:checked', '.box_content').length;
             var domainNumbers = parseInt($('.spinner input').val());
             console.log(selectedRadioLen, domainNumbers)
             if (domainNumbers > 0 && selectedRadioLen > 0) {
                 var selectedDistId = $('input[name=radio1]:checked', '.box_content').data('distid');
                 self.callCopyDomainAjax(selectedDistId, domainNumbers);
+            }else{
+               // alert("Please Select the Domai First");
+                
+                 $('#popUpModal .modal-body').text('Please Select the Domain First');
+                        $('#modalDownloadBtn').hide();
+                        $('#popUpModal').modal('show');
             }
 
-            // var res = {
-            //     "messageType": "SUCCESS",
-            //     "message": "Domain created successfully",
-            //     "data": {
-            //         "domains": [
-            //             {
-            //                 "domainId": "48268605",
-            //                 "name": "Edivate Learn Demo District-163239",
-            //                 "userspace": null,
-            //                 "parentId": null,
-            //                 "reference": null
-            //             },
-            //             {
-            //                 "domainId": "48269681",
-            //                 "name": "Edivate Learn Demo School 1",
-            //                 "userspace": null,
-            //                 "parentId": null,
-            //                 "reference": null
-            //             },
-            //             {
-            //                 "domainId": "48269682",
-            //                 "name": "Edivate Learn Demo School 2",
-            //                 "userspace": null,
-            //                 "parentId": null,
-            //                 "reference": null
-            //             }
-            //         ]
-            //     }
-            // }
+        //     var res = {
+        //         "messageType": "SUCCESS",
+        //         "message": "Domain created successfully",
+        //         "data": {
+        //             "domains": [
+        //                 {
+        //                     "domainId": "48268605",
+        //                     "name": "Edivate Learn Demo District-163239",
+        //                     "userspace": null,
+        //                     "parentId": null,
+        //                     "reference": null
+        //                 },
+        //                 {
+        //                     "domainId": "48269681",
+        //                     "name": "Edivate Learn Demo School 1",
+        //                     "userspace": null,
+        //                     "parentId": null,
+        //                     "reference": null
+        //                 },
+        //                 {
+        //                     "domainId": "48269682",
+        //                     "name": "Edivate Learn Demo School 2",
+        //                     "userspace": null,
+        //                     "parentId": null,
+        //                     "reference": null
+        //                 }
+        //             ]
+        //         }
+        //     }
             
             
-        //    var modalHtml=  self.getModalHtml('#popUpModal .modal-body',res );
+        //    var modalHtml=  self.getModalHtml(res );
         //    console.log(modalHtml);
         //     $('#popUpModal .modal-body').html(modalHtml);
         //     $('#popUpModal').modal('show');
